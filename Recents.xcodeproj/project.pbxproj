@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		68106B272629ADC60019E4E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B262629ADC60019E4E0 /* AppDelegate.swift */; };
 		68106B292629ADC60019E4E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B282629ADC60019E4E0 /* SceneDelegate.swift */; };
-		68106B2B2629ADC60019E4E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B2A2629ADC60019E4E0 /* ViewController.swift */; };
 		68106B2E2629ADC60019E4E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68106B2C2629ADC60019E4E0 /* Main.storyboard */; };
 		68106B302629ADC70019E4E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68106B2F2629ADC70019E4E0 /* Assets.xcassets */; };
 		68106B332629ADC70019E4E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68106B312629ADC70019E4E0 /* LaunchScreen.storyboard */; };
+		68106B3D2629B14D0019E4E0 /* RecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B3C2629B14D0019E4E0 /* RecentCell.swift */; };
+		68106B402629B2520019E4E0 /* RecentCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B3F2629B2520019E4E0 /* RecentCall.swift */; };
+		68106B432629B2830019E4E0 /* RecentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B422629B2830019E4E0 /* RecentStore.swift */; };
+		68106B492629B5CC0019E4E0 /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B482629B5CC0019E4E0 /* RecentViewController.swift */; };
+		68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68880E97262DC8E000824AF2 /* ContactsViewController.swift */; };
+		68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68880E9A262DC8FC00824AF2 /* ContactsStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		68106B232629ADC60019E4E0 /* Recents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68106B262629ADC60019E4E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68106B282629ADC60019E4E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		68106B2A2629ADC60019E4E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		68106B2D2629ADC60019E4E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		68106B2F2629ADC70019E4E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		68106B322629ADC70019E4E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		68106B342629ADC80019E4E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68106B3C2629B14D0019E4E0 /* RecentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCell.swift; sourceTree = "<group>"; };
+		68106B3F2629B2520019E4E0 /* RecentCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCall.swift; sourceTree = "<group>"; };
+		68106B422629B2830019E4E0 /* RecentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentStore.swift; sourceTree = "<group>"; };
+		68106B482629B5CC0019E4E0 /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
+		68880E97262DC8E000824AF2 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		68880E9A262DC8FC00824AF2 /* ContactsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +68,34 @@
 			children = (
 				68106B262629ADC60019E4E0 /* AppDelegate.swift */,
 				68106B282629ADC60019E4E0 /* SceneDelegate.swift */,
-				68106B2A2629ADC60019E4E0 /* ViewController.swift */,
 				68106B2C2629ADC60019E4E0 /* Main.storyboard */,
+				68880EA0262DCD6E00824AF2 /* Contacts */,
+				68880EA1262DCD8200824AF2 /* Recent */,
 				68106B2F2629ADC70019E4E0 /* Assets.xcassets */,
 				68106B312629ADC70019E4E0 /* LaunchScreen.storyboard */,
 				68106B342629ADC80019E4E0 /* Info.plist */,
 			);
 			path = Recents;
+			sourceTree = "<group>";
+		};
+		68880EA0262DCD6E00824AF2 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				68880E97262DC8E000824AF2 /* ContactsViewController.swift */,
+				68880E9A262DC8FC00824AF2 /* ContactsStore.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		68880EA1262DCD8200824AF2 /* Recent */ = {
+			isa = PBXGroup;
+			children = (
+				68106B482629B5CC0019E4E0 /* RecentViewController.swift */,
+				68106B422629B2830019E4E0 /* RecentStore.swift */,
+				68106B3C2629B14D0019E4E0 /* RecentCell.swift */,
+				68106B3F2629B2520019E4E0 /* RecentCall.swift */,
+			);
+			path = Recent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +168,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68106B2B2629ADC60019E4E0 /* ViewController.swift in Sources */,
+				68106B3D2629B14D0019E4E0 /* RecentCell.swift in Sources */,
+				68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */,
+				68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */,
+				68106B432629B2830019E4E0 /* RecentStore.swift in Sources */,
 				68106B272629ADC60019E4E0 /* AppDelegate.swift in Sources */,
+				68106B492629B5CC0019E4E0 /* RecentViewController.swift in Sources */,
+				68106B402629B2520019E4E0 /* RecentCall.swift in Sources */,
 				68106B292629ADC60019E4E0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
