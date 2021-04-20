@@ -1,20 +1,22 @@
 import UIKit
 
-struct Contact {
+struct Contact: Codable {
     var name: String
 }
 
 class ContactStore {
-    var contacts = [
-        Contact(name:"Angel"), Contact(name:"Angel2"),
-        Contact(name:"Asen"), Contact(name:"Asen2"),
-        Contact(name:"Borislav"), Contact(name:"Borislav2"),
-        Contact(name:"Bogdan"), Contact(name:"Bogdan2"),
-        Contact(name:"Cvetan"), Contact(name:"Cvetan2"),
-        Contact(name:"Cvetelina"), Contact(name:"Cvetelina2"),
-        Contact(name:"Daniela"), Contact(name:"Daniela2"),
-        Contact(name:"Dimitar"), Contact(name:"Dimitar2")
-    ]
+    var contacts: [Contact]
+    
+    init() {
+        let path = Bundle.main.url(forResource: "contacts", withExtension: "json")!
+        do {
+            let jsonData = try Data(contentsOf: path)
+            contacts = try JSONDecoder().decode([Contact].self, from: jsonData)
+        } catch {
+            contacts = [Contact]()
+            print("Error reading items \(error)")
+        }
+    }
     
     var firstLetter: [Character] {
         var firstLetters = Set<Character>()

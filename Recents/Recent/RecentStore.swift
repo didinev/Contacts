@@ -14,20 +14,14 @@ public class RecentStore {
     var missedCalls: [Call]
     
     init() {
-        self.allCalls = [
-            Call(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            Call(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
-            Call(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            Call(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            Call(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            Call(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true),
-            Call(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            Call(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
-            Call(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            Call(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            Call(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            Call(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true)
-        ]
+        let path = Bundle.main.url(forResource: "calls", withExtension: "json")!
+        do {
+            let jsonData = try Data(contentsOf: path)
+            allCalls = try JSONDecoder().decode([Call].self, from: jsonData)
+        } catch {
+            allCalls = [Call]()
+            print("Error reading items \(error)")
+        }
         self.missedCalls = allCalls.filter { $0.isMissed }
     }
     

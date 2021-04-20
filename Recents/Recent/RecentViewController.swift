@@ -41,9 +41,9 @@ class RecentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //eventualno drugo mqsto
         if allCalls.count == 0 {
-            self.tableView.setEmptyMessage("No Items")
+            setEmptyMessage("No Items")
         } else {
-            self.tableView.restore()
+            restore()
         }
         return segmentControl.selectedSegmentIndex == 0 ? allCalls.count : allCalls.missedCallsCount
     }
@@ -53,25 +53,24 @@ class RecentViewController: UITableViewController {
         let call = segmentControl.selectedSegmentIndex == 0 ? allCalls.getCall(at: indexPath) : allCalls.getMissedCall(at: indexPath)
         cell.nameLabel.textColor = call.isMissed ? .red : .black
         cell.nameLabel.text = call.name
+        cell.isOutgoingIcon.isHidden = !call.isOutgoing
         cell.typeOfCallLabel.text = call.typeOfCall
         cell.dateLabel.text = call.formattedDate
         
         return cell
     }
-}
-
-extension UITableView {
+    
     func setEmptyMessage(_ message: String) {
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         messageLabel.text = message
         messageLabel.textAlignment = .center
 
-        self.backgroundView = messageLabel
-        self.separatorStyle = .none
+        tableView.backgroundView = messageLabel
+        tableView.separatorStyle = .none
     }
 
     func restore() {
-        self.backgroundView = nil
-        self.separatorStyle = .singleLine
+        tableView.backgroundView = nil
+        tableView.separatorStyle = .singleLine
     }
 }
