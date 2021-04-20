@@ -5,11 +5,15 @@ struct Call: Equatable {
     var typeOfCall: String
     var date: Date
     
-    var formattedDate : String {
+    static let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d.MM.yy"
         formatter.locale = Locale.current
-        return formatter.string(from: date)
+        return formatter
+    }()
+    
+    var formattedDate : String {
+        return Call.formatter.string(from: date)
     }
     
     var isMissed: Bool

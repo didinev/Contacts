@@ -39,6 +39,7 @@ class RecentViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //eventualno drugo mqsto
         if allCalls.count == 0 {
             self.tableView.setEmptyMessage("No Items")
         } else {

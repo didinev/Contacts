@@ -10,7 +10,6 @@ class ConstactsViewController : UITableViewController {
         
         title = "Contacts"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
         
         navigationItem.searchController = UISearchController()
         navigationController?.navigationItem.hidesSearchBarWhenScrolling = false

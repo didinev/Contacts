@@ -6,32 +6,32 @@ enum TypeOfCall {
 }
 
 public class RecentStore {
-    var allCalls: [RecentCall] {
+    var allCalls: [Call] {
         didSet {
             missedCalls = allCalls.filter { $0.isMissed }
         }
     }
-    var missedCalls: [RecentCall]
+    var missedCalls: [Call]
     
     init() {
         self.allCalls = [
-            RecentCall(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            RecentCall(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
-            RecentCall(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            RecentCall(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            RecentCall(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            RecentCall(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true),
-            RecentCall(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            RecentCall(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
-            RecentCall(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            RecentCall(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
-            RecentCall(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
-            RecentCall(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true)
+            Call(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
+            Call(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
+            Call(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
+            Call(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
+            Call(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
+            Call(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true),
+            Call(name: "Goshko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
+            Call(name: "Peshko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: false),
+            Call(name: "Nasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
+            Call(name: "Vasko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: true),
+            Call(name: "Masko", typeOfCall: "\(TypeOfCall.mobile)", date: Date(), isMissed: false),
+            Call(name: "Sashko", typeOfCall: "\(TypeOfCall.FaceTime)", date: Date(), isMissed: true)
         ]
         self.missedCalls = allCalls.filter { $0.isMissed }
     }
     
-    func deleteCall(_ call: RecentCall) {
+    func deleteCall(_ call: Call) {
         if let index = allCalls.firstIndex(of: call) {
             allCalls.remove(at: index)
         }
@@ -41,11 +41,11 @@ public class RecentStore {
         allCalls = []
     }
     
-    func getCall(at indexPath: IndexPath) -> RecentCall {
+    func getCall(at indexPath: IndexPath) -> Call {
         return allCalls[indexPath.row]
     }
     
-    func getMissedCall(at indexPath: IndexPath) -> RecentCall {
+    func getMissedCall(at indexPath: IndexPath) -> Call {
         return missedCalls[indexPath.row]
     }
     
