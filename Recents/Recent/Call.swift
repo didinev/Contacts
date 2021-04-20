@@ -1,6 +1,6 @@
 import Foundation
 
-struct RecentCall: Equatable {
+struct Call: Equatable {
     var name: String
     var typeOfCall: String
     var date: Date
