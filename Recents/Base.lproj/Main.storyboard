@@ -132,16 +132,10 @@
                                 <action selector="didChangeSegment:" destination="qIf-3V-WFH" eventType="valueChanged" id="mQb-CN-zTu"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Zah-rU-uUv">
-                            <connections>
-                                <action selector="edit:" destination="qIf-3V-WFH" id="TBx-IT-v6J"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="leftNavBarButton" destination="neV-m6-gyG" id="psM-IR-s8F"/>
-                        <outlet property="rightNavBarButton" destination="Zah-rU-uUv" id="iRf-xS-swQ"/>
                         <outlet property="segmentControl" destination="qNk-KS-gDk" id="6fz-iF-hE9"/>
                     </connections>
                 </tableViewController>

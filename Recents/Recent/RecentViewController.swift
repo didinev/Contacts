@@ -8,18 +8,19 @@ class RecentViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    @IBOutlet var rightNavBarButton: UIBarButtonItem!
     @IBOutlet var leftNavBarButton: UIBarButtonItem!
+        
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
     
-    
-    @IBAction func edit(_ sender: UIBarButtonItem) {
-        isEditing.toggle()
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(!isEditing, animated: true)
         if isEditing {
-            rightNavBarButton.title = "Done"
-            leftNavBarButton.isEnabled = true
             leftNavBarButton.title = "Clear"
+            leftNavBarButton.isEnabled = true
         } else {
-            rightNavBarButton.title = "Edit"
             leftNavBarButton.isEnabled = false
             leftNavBarButton.title = ""
         }

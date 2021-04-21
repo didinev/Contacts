@@ -3,16 +3,9 @@ import Foundation
 struct Call: Equatable, Codable {
     var name: String
     var typeOfCall: String
-    var date: String
+    var date: Date
     var isMissed: Bool
     var isOutgoing: Bool
-    
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d.MM.yy HH:mm"
-        formatter.locale = Locale.current
-        return formatter
-    }()
     
     static let todayDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -32,16 +25,14 @@ struct Call: Equatable, Codable {
         return formatter
     }()
 
-    var formattedDate : String {
-        guard let date = Call.formatter.date(from: date) else {
-            return Call.formatter.string(from: Date())
-        }
-        
+    let weekDuration = TimeInterval(60 * 60 * 24 * 7)
+    
+    var formattedDate: String {
         if Calendar.current.isDateInToday(date) {
             return Call.todayDateFormatter.string(from: date)
         } else if Calendar.current.isDateInYesterday(date) {
             return "Yesterday"
-        } else if date.distance(to: Date()) < 60 * 60 * 24 * 7 {
+        } else if date.distance(to: Date()) < weekDuration {
             return Call.lastWeekDateFormatter.string(from: date)
         } else {
             return Call.moreThanWeekDateFormatter.string(from: date)

@@ -4,9 +4,11 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
     var contactStore = ContactStore()
     let searchController = UISearchController()
     var filteredContacts: [Contact] = []
+    
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
+    
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
@@ -26,16 +28,12 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
         addTopCardLayer()
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text?.lowercased() ?? ""
         filteredContacts = contactStore.contacts.filter { (contact: Contact) -> Bool in
-            return contact.name.lowercased().contains(searchText.lowercased())
+            return contact.name.lowercased().hasPrefix(searchText)
         }
         tableView.reloadData()
-    }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!)
     }
     
     func addTopCardLayer() {

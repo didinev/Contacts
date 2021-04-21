@@ -7,16 +7,35 @@ struct Contact: Codable {
 class ContactStore {
     var contacts: [Contact]
     
+    var callsArchiveURL: URL = {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        print(documentDirectory)
+        return documentDirectory.appendingPathComponent("contacts.json")
+    }()
+    
     init() {
-        let path = Bundle.main.url(forResource: "contacts", withExtension: "json")!
         do {
-            let jsonData = try Data(contentsOf: path)
-            contacts = try JSONDecoder().decode([Contact].self, from: jsonData)
+            let data = try Data(contentsOf: callsArchiveURL)
+            let decoder = JSONDecoder()
+            //decoder.dateDecodingStrategy = .formatted(Call.formatter)
+            contacts = try decoder.decode([Contact].self, from: data)
         } catch {
             contacts = [Contact]()
             print("Error reading items \(error)")
         }
     }
+    
+//    init() {
+//        let path = Bundle.main.url(forResource: "contacts", withExtension: "json")!
+//        do {
+//            let jsonData = try Data(contentsOf: path)
+//            contacts = try JSONDecoder().decode([Contact].self, from: jsonData)
+//        } catch {
+//            contacts = [Contact]()
+//            print("Error reading items \(error)")
+//        }
+//    }
     
     var firstLetter: [Character] {
         var firstLetters = Set<Character>()
