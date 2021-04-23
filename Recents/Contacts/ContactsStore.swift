@@ -7,7 +7,7 @@ struct Contact: Codable {
 class ContactStore {
     var contacts: [Contact]
     
-    var callsArchiveURL: URL = {
+    var contactsArchiveURL: URL = {
         let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = documentsDirectories.first!
         print(documentDirectory)
@@ -16,9 +16,8 @@ class ContactStore {
     
     init() {
         do {
-            let data = try Data(contentsOf: callsArchiveURL)
+            let data = try Data(contentsOf: contactsArchiveURL)
             let decoder = JSONDecoder()
-            //decoder.dateDecodingStrategy = .formatted(Call.formatter)
             contacts = try decoder.decode([Contact].self, from: data)
         } catch {
             contacts = [Contact]()

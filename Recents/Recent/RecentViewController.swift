@@ -16,14 +16,9 @@ class RecentViewController: UITableViewController {
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(!isEditing, animated: true)
-        if isEditing {
-            leftNavBarButton.title = "Clear"
-            leftNavBarButton.isEnabled = true
-        } else {
-            leftNavBarButton.isEnabled = false
-            leftNavBarButton.title = ""
-        }
+        super.setEditing(editing, animated: true)
+        leftNavBarButton.title = isEditing ? "Clear" : ""
+        leftNavBarButton.isEnabled = isEditing
     }
     
     @IBAction func clear(_ sender: Any) {

@@ -16,6 +16,7 @@ public class RecentStore {
     var callsArchiveURL: URL = {
         let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = documentsDirectories.first!
+        print(documentDirectory)
         return documentDirectory.appendingPathComponent("calls.json")
     }()
     
@@ -38,18 +39,6 @@ public class RecentStore {
         }
         self.missedCalls = allCalls.filter { $0.isMissed }
     }
-    
-//    init() {
-//        let path = Bundle.main.url(forResource: "calls", withExtension: "json")!
-//        do {
-//            let jsonData = try Data(contentsOf: path)
-//            allCalls = try JSONDecoder().decode([Call].self, from: jsonData)
-//        } catch {
-//            allCalls = [Call]()
-//            print("Error reading items \(error)")
-//        }
-//        self.missedCalls = allCalls.filter { $0.isMissed }
-//    }
     
     func deleteCall(_ call: Call) {
         if let index = allCalls.firstIndex(of: call) {
