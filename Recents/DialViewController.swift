@@ -8,37 +8,51 @@
 import UIKit
 
 class DialViewController: UIViewController {
-    var runningNumber = ""
     @IBOutlet var label: UILabel!
-    
-    var grayOperatorInitialBackground = "A5A5A5FF"
-    var orangeOperatorInitialBackground = "F1A33CFF"
-    var equalButtonClicked = "F1A33C08"
-    
-    var item: UILabel! {
-        didSet {
-            label.text = runningNumber
-        }
-    }
+    @IBOutlet var addNumber: UIButton!
+    var countryCodes = ["1", "365", "44"]
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromDial" {
             let callViewController = segue.destination as! CallViewController
-            callViewController.callLabel = item
+            callViewController.call = label.text
         }
     }
     
     @IBAction func numPressed(_ sender: UIButton) {
-        runningNumber += "\(sender.tag)"
-        label.text = runningNumber
+        if label.text?.first == "0" {
+            if label.text?.count == 3 {
+                label.text?.append(" ")
+            }
+        } else if label.text?.count == 2 {
+            label.text?.append(" ")
+        }
+        
+        label.text?.append(sender.currentTitle!)
+        
+        if label.text?.count != 0 {
+            addNumber.isHidden = false
+        }
         changeNumbersBackground(sender)
+    }
+    
+    @IBAction func deleteNumber(_ sender: Any) {
+        if label.text!.count == 0 {
+            addNumber.isHidden = true
+            return
+        }
+        label.text?.removeLast()
     }
     
     func changeNumbersBackground(_ sender: UIButton) {
         UIView.animate(withDuration: 1) {
-            sender.backgroundColor = UIColor(rgb: 0x333333)
-            sender.backgroundColor = UIColor(hex: self.grayOperatorInitialBackground)
+            sender.backgroundColor = .systemGray2
+            sender.backgroundColor = UIColor(hex: "E8E7E8FF")
         }
+    }
+    
+    @IBAction func longPressZero(_ sender: Any) {
+        label.text?.append("+")
     }
 }
 

@@ -25,17 +25,6 @@ class ContactStore {
         }
     }
     
-//    init() {
-//        let path = Bundle.main.url(forResource: "contacts", withExtension: "json")!
-//        do {
-//            let jsonData = try Data(contentsOf: path)
-//            contacts = try JSONDecoder().decode([Contact].self, from: jsonData)
-//        } catch {
-//            contacts = [Contact]()
-//            print("Error reading items \(error)")
-//        }
-//    }
-    
     var firstLetter: [Character] {
         var firstLetters = Set<Character>()
         contacts.forEach { firstLetters.insert($0.name.first!) }

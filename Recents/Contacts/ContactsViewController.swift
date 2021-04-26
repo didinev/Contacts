@@ -60,6 +60,15 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
         let contact = isFiltering ? filteredContacts[indexPath.row] : contactStore.getContact(indexPath)
         cell.textLabel?.text = contact.name
         cell.textLabel?.font = .boldSystemFont(ofSize: 17)
+        
         return cell
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "fromContacts" {
+//            let contact = filteredContacts[IndexPath]
+//            let callViewController = segue.destination as! CallViewController
+//            callViewController.call = Contact.name
+//        }
+//    }
 }
