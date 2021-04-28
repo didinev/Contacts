@@ -13,6 +13,16 @@ class CallViewController: UIViewController {
     @IBOutlet var timerLabel: UILabel!
     var call: String!
     
+    @IBOutlet var numberLabel: UILabel!
+    @IBOutlet var keypadView: UIView!
+    
+    @IBAction func openKeypad(_ sender: Any) {
+        keypadView.isHidden = false
+    }
+    
+    @IBAction func hideKeypad(_ sender: Any) {
+        keypadView.isHidden = true
+    }
     var timer = Timer()
     var seconds = 0
     var minutes = 0
@@ -24,7 +34,7 @@ class CallViewController: UIViewController {
     }
     
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
     @objc func updateTimer() {
@@ -37,6 +47,27 @@ class CallViewController: UIViewController {
     }
     
     @IBAction func endCall(_ sender: Any) {
+        do {
+            let recentStore = RecentStore()
+            recentStore.allCalls.insert(Call(name: callLabel.text!, typeOfCall: "Dial", date: Date(), isMissed: false, isOutgoing: true), at: 0)
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .formatted(RecentStore.formatter)
+            let JsonData = try encoder.encode(recentStore.allCalls)
+            try JsonData.write(to: recentStore.callsArchiveURL)
+        } catch {}
+        
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    @IBAction func numPressed(_ sender: UIButton) {
+        if numberLabel.text?.first == "0" {
+            if numberLabel.text?.count == 3 {
+                numberLabel.text?.append(" ")
+            }
+        } else if numberLabel.text?.count == 2 {
+            numberLabel.text?.append(" ")
+        }
+        
+        numberLabel.text?.append(sender.currentTitle!)
     }
 }

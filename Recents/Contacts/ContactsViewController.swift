@@ -63,12 +63,13 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
         
         return cell
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "fromContacts" {
-//            let contact = filteredContacts[IndexPath]
-//            let callViewController = segue.destination as! CallViewController
-//            callViewController.call = Contact.name
-//        }
-//    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromContacts" {
+            let indexPath = tableView.indexPathForSelectedRow
+            let contact = contactStore.getContact(indexPath!)
+            let callViewController = segue.destination as! CallViewController
+            callViewController.call = contact.name
+        }
+    }
 }

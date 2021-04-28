@@ -8,40 +8,43 @@
 import UIKit
 
 class DialViewController: UIViewController {
-    @IBOutlet var label: UILabel!
-    @IBOutlet var addNumber: UIButton!
+    @IBOutlet var numberLabel: UILabel!
+    @IBOutlet var addNumberButton: UIButton!
+    
     var countryCodes = ["1", "365", "44"]
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromDial" {
             let callViewController = segue.destination as! CallViewController
-            callViewController.call = label.text
+            callViewController.call = numberLabel.text
         }
     }
     
+    func needSpace(_ text: String) -> Bool {
+        let first = text.first
+        return first == "0" && text.count == 3 ||
+            first == "+" && countryCodes.contains(text) ||
+            first != "0" && first != "+" && text.count == 2
+    }
+    
     @IBAction func numPressed(_ sender: UIButton) {
-        if label.text?.first == "0" {
-            if label.text?.count == 3 {
-                label.text?.append(" ")
-            }
-        } else if label.text?.count == 2 {
-            label.text?.append(" ")
+        if needSpace(numberLabel.text!) {
+            numberLabel.text?.append(" ")
         }
         
-        label.text?.append(sender.currentTitle!)
-        
-        if label.text?.count != 0 {
-            addNumber.isHidden = false
+        numberLabel.text?.append(sender.currentTitle ?? "")
+        if numberLabel.text?.count != 0 {
+            addNumberButton.isHidden = false
         }
         changeNumbersBackground(sender)
     }
     
     @IBAction func deleteNumber(_ sender: Any) {
-        if label.text!.count == 0 {
-            addNumber.isHidden = true
+        if numberLabel.text!.count == 0 {
+            addNumberButton.isHidden = true
             return
         }
-        label.text?.removeLast()
+        numberLabel.text?.removeLast()
     }
     
     func changeNumbersBackground(_ sender: UIButton) {
@@ -52,7 +55,7 @@ class DialViewController: UIViewController {
     }
     
     @IBAction func longPressZero(_ sender: Any) {
-        label.text?.append("+")
+        numberLabel.text?.append("+")
     }
 }
 

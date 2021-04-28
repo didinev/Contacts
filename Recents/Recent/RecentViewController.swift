@@ -9,10 +9,15 @@ class RecentViewController: UITableViewController {
     }
     
     @IBOutlet var leftNavBarButton: UIBarButtonItem!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
         
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         navigationItem.rightBarButtonItem = editButtonItem
+//        tableView.reloadData()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
