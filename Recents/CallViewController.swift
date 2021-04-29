@@ -54,7 +54,9 @@ class CallViewController: UIViewController {
             encoder.dateEncodingStrategy = .formatted(RecentStore.formatter)
             let JsonData = try encoder.encode(recentStore.allCalls)
             try JsonData.write(to: recentStore.callsArchiveURL)
-        } catch {}
+        } catch {
+            print(error)
+        }
         
         self.dismiss(animated: false, completion: nil)
     }
@@ -71,5 +73,3 @@ class CallViewController: UIViewController {
         numberLabel.text?.append(sender.currentTitle!)
     }
 }
-
-//hotfix branch
