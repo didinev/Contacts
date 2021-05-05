@@ -18,6 +18,9 @@
 		68106B492629B5CC0019E4E0 /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68106B482629B5CC0019E4E0 /* RecentViewController.swift */; };
 		68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68880E97262DC8E000824AF2 /* ContactsViewController.swift */; };
 		68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68880E9A262DC8FC00824AF2 /* ContactsStore.swift */; };
+		68A2EEF326416BBD00C27DA9 /* ReusableNumpadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A2EEF226416BBD00C27DA9 /* ReusableNumpadTest.swift */; };
+		68A2EEFF2641C28100C27DA9 /* ReusableNumpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */; };
+		68A2EF022641C29A00C27DA9 /* ReusableNumpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */; };
 		68BBEFD3263303DA00EE1501 /* DialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BBEFD2263303DA00EE1501 /* DialViewController.swift */; };
 		68BBEFD6263315D100EE1501 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BBEFD5263315D100EE1501 /* CallViewController.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +39,9 @@
 		68106B482629B5CC0019E4E0 /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		68880E97262DC8E000824AF2 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		68880E9A262DC8FC00824AF2 /* ContactsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsStore.swift; sourceTree = "<group>"; };
+		68A2EEF226416BBD00C27DA9 /* ReusableNumpadTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableNumpadTest.swift; sourceTree = "<group>"; };
+		68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReusableNumpad.xib; sourceTree = "<group>"; };
+		68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableNumpad.swift; sourceTree = "<group>"; };
 		68BBEFD2263303DA00EE1501 /* DialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialViewController.swift; sourceTree = "<group>"; };
 		68BBEFD5263315D100EE1501 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +81,9 @@
 				68106B2C2629ADC60019E4E0 /* Main.storyboard */,
 				68BBEFD5263315D100EE1501 /* CallViewController.swift */,
 				68BBEFD2263303DA00EE1501 /* DialViewController.swift */,
+				68A2EEF226416BBD00C27DA9 /* ReusableNumpadTest.swift */,
+				68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */,
+				68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */,
 				68880EA0262DCD6E00824AF2 /* Contacts */,
 				68880EA1262DCD8200824AF2 /* Recent */,
 				68106B2F2629ADC70019E4E0 /* Assets.xcassets */,
@@ -164,6 +173,7 @@
 				68106B332629ADC70019E4E0 /* LaunchScreen.storyboard in Resources */,
 				68106B302629ADC70019E4E0 /* Assets.xcassets in Resources */,
 				68106B2E2629ADC60019E4E0 /* Main.storyboard in Resources */,
+				68A2EEFF2641C28100C27DA9 /* ReusableNumpad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,8 +187,10 @@
 				68106B3D2629B14D0019E4E0 /* RecentCell.swift in Sources */,
 				68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */,
 				68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */,
+				68A2EF022641C29A00C27DA9 /* ReusableNumpad.swift in Sources */,
 				68106B432629B2830019E4E0 /* RecentStore.swift in Sources */,
 				68106B272629ADC60019E4E0 /* AppDelegate.swift in Sources */,
+				68A2EEF326416BBD00C27DA9 /* ReusableNumpadTest.swift in Sources */,
 				68BBEFD3263303DA00EE1501 /* DialViewController.swift in Sources */,
 				68106B492629B5CC0019E4E0 /* RecentViewController.swift in Sources */,
 				68106B402629B2520019E4E0 /* Call.swift in Sources */,

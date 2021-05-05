@@ -13,16 +13,31 @@ class CallViewController: UIViewController {
     @IBOutlet var timerLabel: UILabel!
     var call: String!
     
+    @IBOutlet var hideButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
-    @IBOutlet var keypadView: UIView!
+    
+    let reusableKeypad = ReusableNumpad(frame: CGRect(x: 45, y: 20, width: 290.0, height: 575))
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.addSubview(reusableKeypad)
+        reusableKeypad.isHidden = true
+        hideButton.isEnabled = false
+        hideButton.setTitle("", for: .disabled)
+    }
     
     @IBAction func openKeypad(_ sender: Any) {
-        keypadView.isHidden = false
+        reusableKeypad.isHidden = false
+        hideButton.isEnabled = true
     }
     
+    @IBOutlet var numpad: ReusableNumpad!
+    
     @IBAction func hideKeypad(_ sender: Any) {
-        keypadView.isHidden = true
+        reusableKeypad.isHidden = true
+        hideButton.isEnabled = false
     }
+    
     var timer = Timer()
     var seconds = 0
     var minutes = 0
