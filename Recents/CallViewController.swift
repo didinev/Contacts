@@ -1,10 +1,3 @@
-//
-//  CallViewController.swift
-//  Recents
-//
-//  Created by Dimitar Dinev on 23.04.21.
-//
-
 import UIKit
 
 class CallViewController: UIViewController {
@@ -16,22 +9,34 @@ class CallViewController: UIViewController {
     @IBOutlet var hideButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
     
-    let reusableKeypad = ReusableNumpad(frame: CGRect(x: 45, y: 20, width: 290.0, height: 575))
+    let reusableKeypad: ReusableNumpad = .fromNib()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .allEvents)
         self.view.addSubview(reusableKeypad)
         reusableKeypad.isHidden = true
         hideButton.isEnabled = false
         hideButton.setTitle("", for: .disabled)
+        
+        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            reusableKeypad.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 120),
+            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
+        ])
+    }
+    
+    @objc func keyEvent(_ sender: ReusableNumpad) {
+        numberLabel.text! += sender.keyPressed
     }
     
     @IBAction func openKeypad(_ sender: Any) {
         reusableKeypad.isHidden = false
         hideButton.isEnabled = true
     }
-    
-    @IBOutlet var numpad: ReusableNumpad!
     
     @IBAction func hideKeypad(_ sender: Any) {
         reusableKeypad.isHidden = true
@@ -74,17 +79,5 @@ class CallViewController: UIViewController {
         }
         
         self.dismiss(animated: false, completion: nil)
-    }
-    
-    @IBAction func numPressed(_ sender: UIButton) {
-        if numberLabel.text?.first == "0" {
-            if numberLabel.text?.count == 3 {
-                numberLabel.text?.append(" ")
-            }
-        } else if numberLabel.text?.count == 2 {
-            numberLabel.text?.append(" ")
-        }
-        
-        numberLabel.text?.append(sender.currentTitle!)
     }
 }

@@ -1,28 +1,10 @@
-//
-//  DialViewController.swift
-//  Recents
-//
-//  Created by Dimitar Dinev on 23.04.21.
-//
-
 import UIKit
 
-class DialViewController: UIViewController {
-//    @IBOutlet var reusableNumpad: ReusableNumpad!
-//    var countryCodes = ["1", "365", "44"]
-//
-//    func needSpace(_ text: String) -> Bool {
-//        let first = text.first
-//        return first == "0" && text.count == 3 ||
-//            first == "+" && countryCodes.contains(text) ||
-//            first != "0" && first != "+" && text.count == 2
-//    }
-    
-    let reusableKeypad = ReusableNumpad(frame: CGRect(x: 45, y: 20, width: 290.0, height: 575))
+class DialViewController: UIViewController {    
+    let reusableKeypad: ReusableNumpad = .fromNib()
     
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var callButton: UIButton!
-    
     @IBOutlet var numberLabel: UILabel!
     @IBOutlet var addNumberButton: UIButton!
     
@@ -30,18 +12,28 @@ class DialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reusableKeypad.addTarget(self,
-                              action: #selector(keyEvent),
-                              for: .allEvents)
+        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .touchDown)
         self.view.addSubview(reusableKeypad)
+        
+        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            reusableKeypad.topAnchor.constraint(equalTo: addNumberButton.bottomAnchor, constant: 20),
+            callButton.topAnchor.constraint(equalTo: reusableKeypad.bottomAnchor, constant: 20),
+            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
+        ])
     }
     
     @objc func keyEvent(_ sender: ReusableNumpad) {
-//        if numberLabel.text?.count != 0 {
-//            addNumberButton.isHidden = false
-//        }
+        if numberLabel.text?.count != 0 {
+            addNumberButton.isHidden = false
+        }
         numberLabel.text! += sender.keyPressed
-        print("dsaakj")
+        if needSpace(numberLabel.text!) {
+            numberLabel.text?.append(" ")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -51,8 +43,15 @@ class DialViewController: UIViewController {
         }
     }
     
+    func needSpace(_ text: String) -> Bool {
+        let first = text.first
+        return first == "0" && text.count == 3 ||
+            first == "+" && countryCodes.contains(text) ||
+            first != "0" && first != "+" && text.count == 2
+    }
+    
     @IBAction func deleteNumber(_ sender: Any) {
-        if numberLabel.text!.count == 0 {
+        if numberLabel.text!.isEmpty {
             addNumberButton.isHidden = true
             return
         }
@@ -94,41 +93,3 @@ extension UIColor {
         self.init(red: r, green: g, blue: b, alpha: a)
     }
 }
-
-
-//func changeNumbersBackground(_ sender: UIButton) {
-//    UIView.animate(withDuration: 1) {
-//        sender.backgroundColor = .systemGray2
-//        sender.backgroundColor = UIColor(hex: "E8E7E8FF")
-//    }
-//}
-
-//func needSpace(_ text: String) -> Bool {
-//    let first = text.first
-//    return first == "0" && text.count == 3 ||
-//        first == "+" && countryCodes.contains(text) ||
-//        first != "0" && first != "+" && text.count == 2
-//}
-//
-//@IBAction func numPressed(_ sender: UIButton) {
-//    //reusableKeypad.numPressed(sender)
-//    if needSpace(numberLabel.text!) {
-//        numberLabel.text?.append(" ")
-//    }
-//
-//    numberLabel.text?.append(sender.currentTitle ?? "")
-//    if numberLabel.text?.count != 0 {
-//        addNumberButton.isHidden = false
-//    }
-//    changeNumbersBackground(sender)
-//}
-
-
-//        NSLayoutConstraint.activate([
-//            reusableKeypad.topAnchor.constraint(equalTo: addNumberButton.bottomAnchor, constant: 20),
-//            stackView.topAnchor.constraint(equalTo: reusableKeypad.bottomAnchor, constant: 30),
-//            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-//            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-//        ])
-
-//        reusableKeypad.numPressed(<#T##sender: UIButton##UIButton#>)

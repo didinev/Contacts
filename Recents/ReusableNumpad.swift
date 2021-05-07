@@ -7,16 +7,20 @@
 
 import UIKit
 
+extension UIView {
+    class func fromNib<T: UIView>() -> T {
+        return Bundle(for: T.self).loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
+    }
+}
+
 //rename
-class ReusableNumpad: UIControl {
-    
+class ReusableNumpad: UIControl, UICollectionViewDelegate {
     var keyPressed: String!
     
     @IBAction func numPressed(_ sender: UIButton) {
         changeNumbersBackground(sender)
         keyPressed = sender.titleLabel?.text
-        sendActions(for: .allEvents)
-        print("numPressed")
+        sendActions(for: .touchDown)
     }
     
     func changeNumbersBackground(_ sender: UIButton) {
@@ -24,18 +28,5 @@ class ReusableNumpad: UIControl {
             sender.backgroundColor = .systemGray2
             sender.backgroundColor = UIColor(hex: "E8E7E8FF")
         }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        let viewFromXib = Bundle.main.loadNibNamed("ReusableNumpad", owner: self, options: nil)?.first as! ReusableNumpad
-        viewFromXib.frame = frame
-        addSubview(viewFromXib)
-        print("frame")
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        print("required")
     }
 }

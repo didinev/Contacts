@@ -585,16 +585,29 @@
                                     <constraint firstAttribute="width" constant="300" id="pEe-KE-XSb"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="x1M-JA-yoF">
+                                <rect key="frame" x="20" y="64" width="350" height="95.666666666666686"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="95.670000000000002" id="VlG-dV-Ren"/>
+                                    <constraint firstAttribute="height" constant="95.670000000000002" id="tp0-BE-B4e"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="40"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sax-Ok-0mx"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="x1M-JA-yoF" secondAttribute="trailing" constant="20" id="07S-oI-qLm"/>
                             <constraint firstItem="8Qr-4i-yC6" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="50" id="1pN-FW-CtX"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="top" secondItem="sax-Ok-0mx" secondAttribute="top" constant="20" id="FMK-aM-z2T"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="UDy-NI-j4C" secondAttribute="trailing" constant="50" id="GSy-a4-8x7"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="bottom" secondItem="8Qr-4i-yC6" secondAttribute="bottom" constant="50" id="TB7-mi-XoI"/>
                             <constraint firstItem="J4K-NZ-AyJ" firstAttribute="centerX" secondItem="hp6-t7-1NI" secondAttribute="centerX" id="W4T-1b-f6a"/>
+                            <constraint firstItem="x1M-JA-yoF" firstAttribute="top" secondItem="sax-Ok-0mx" secondAttribute="top" constant="20" id="a6D-7b-Q0Z"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="50" id="aqH-6R-Q8a"/>
+                            <constraint firstItem="x1M-JA-yoF" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="20" id="dtS-gA-ZaM"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="8Qr-4i-yC6" secondAttribute="trailing" constant="50" id="e1V-GS-tvv"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="centerX" secondItem="hp6-t7-1NI" secondAttribute="centerX" id="o2p-S8-4fs"/>
                             <constraint firstItem="J4K-NZ-AyJ" firstAttribute="centerY" secondItem="hp6-t7-1NI" secondAttribute="centerY" id="zmq-ei-h1b"/>
@@ -604,6 +617,7 @@
                     <connections>
                         <outlet property="callLabel" destination="bjF-88-UtZ" id="31a-4A-VPv"/>
                         <outlet property="hideButton" destination="6OJ-Gf-woZ" id="etM-sa-c8V"/>
+                        <outlet property="numberLabel" destination="x1M-JA-yoF" id="lFF-qd-p6T"/>
                         <outlet property="timerLabel" destination="JQY-YV-s75" id="vtP-68-SCq"/>
                     </connections>
                 </viewController>
