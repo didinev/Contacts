@@ -1,10 +1,3 @@
-//
-//  CallViewController.swift
-//  Recents
-//
-//  Created by Dimitar Dinev on 23.04.21.
-//
-
 import UIKit
 
 class CallViewController: UIViewController {
@@ -13,16 +6,43 @@ class CallViewController: UIViewController {
     @IBOutlet var timerLabel: UILabel!
     var call: String!
     
+    @IBOutlet var hideButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
-    @IBOutlet var keypadView: UIView!
+    
+    let reusableKeypad: ReusableNumpad = .fromNib()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .allEvents)
+        self.view.addSubview(reusableKeypad)
+        reusableKeypad.isHidden = true
+        hideButton.isEnabled = false
+        hideButton.setTitle("", for: .disabled)
+        
+        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            reusableKeypad.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 120),
+            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
+        ])
+    }
+    
+    @objc func keyEvent(_ sender: ReusableNumpad) {
+        numberLabel.text! += sender.keyPressed
+    }
     
     @IBAction func openKeypad(_ sender: Any) {
-        keypadView.isHidden = false
+        reusableKeypad.isHidden = false
+        hideButton.isEnabled = true
     }
     
     @IBAction func hideKeypad(_ sender: Any) {
-        keypadView.isHidden = true
+        reusableKeypad.isHidden = true
+        hideButton.isEnabled = false
     }
+    
     var timer = Timer()
     var seconds = 0
     var minutes = 0
@@ -59,17 +79,5 @@ class CallViewController: UIViewController {
         }
         
         self.dismiss(animated: false, completion: nil)
-    }
-    
-    @IBAction func numPressed(_ sender: UIButton) {
-        if numberLabel.text?.first == "0" {
-            if numberLabel.text?.count == 3 {
-                numberLabel.text?.append(" ")
-            }
-        } else if numberLabel.text?.count == 2 {
-            numberLabel.text?.append(" ")
-        }
-        
-        numberLabel.text?.append(sender.currentTitle!)
     }
 }

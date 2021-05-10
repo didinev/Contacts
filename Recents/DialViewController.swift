@@ -1,17 +1,40 @@
-//
-//  DialViewController.swift
-//  Recents
-//
-//  Created by Dimitar Dinev on 23.04.21.
-//
-
 import UIKit
 
-class DialViewController: UIViewController {
+class DialViewController: UIViewController {    
+    let reusableKeypad: ReusableNumpad = .fromNib()
+    
+    @IBOutlet var stackView: UIStackView!
+    @IBOutlet var callButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
     @IBOutlet var addNumberButton: UIButton!
     
     var countryCodes = ["1", "365", "44"]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .touchDown)
+        self.view.addSubview(reusableKeypad)
+        
+        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            reusableKeypad.topAnchor.constraint(equalTo: addNumberButton.bottomAnchor, constant: 20),
+            callButton.topAnchor.constraint(equalTo: reusableKeypad.bottomAnchor, constant: 20),
+            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
+        ])
+    }
+    
+    @objc func keyEvent(_ sender: ReusableNumpad) {
+        if numberLabel.text?.count != 0 {
+            addNumberButton.isHidden = false
+        }
+        numberLabel.text! += sender.keyPressed
+        if needSpace(numberLabel.text!) {
+            numberLabel.text?.append(" ")
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromDial" {
@@ -27,31 +50,12 @@ class DialViewController: UIViewController {
             first != "0" && first != "+" && text.count == 2
     }
     
-    @IBAction func numPressed(_ sender: UIButton) {
-        if needSpace(numberLabel.text!) {
-            numberLabel.text?.append(" ")
-        }
-        
-        numberLabel.text?.append(sender.currentTitle ?? "")
-        if numberLabel.text?.count != 0 {
-            addNumberButton.isHidden = false
-        }
-        changeNumbersBackground(sender)
-    }
-    
     @IBAction func deleteNumber(_ sender: Any) {
-        if numberLabel.text!.count == 0 {
+        if numberLabel.text!.isEmpty {
             addNumberButton.isHidden = true
             return
         }
         numberLabel.text?.removeLast()
-    }
-    
-    func changeNumbersBackground(_ sender: UIButton) {
-        UIView.animate(withDuration: 1) {
-            sender.backgroundColor = .systemGray2
-            sender.backgroundColor = UIColor(hex: "E8E7E8FF")
-        }
     }
     
     @IBAction func longPressZero(_ sender: Any) {
