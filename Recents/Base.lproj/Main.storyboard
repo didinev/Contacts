@@ -224,6 +224,13 @@
                                 <rect key="frame" x="151.66666666666666" y="169.66666666666666" width="87" height="30"/>
                                 <state key="normal" title="Add Number"/>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNf-fr-UT7" customClass="KeypadContainerViewContol" customModule="Recents" customModuleProvider="target">
+                                <rect key="frame" x="30" y="259" width="330" height="352"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QNf-fr-UT7" secondAttribute="height" multiplier="15:16" id="L7u-dL-TSk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hgL-hG-PQM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -234,7 +241,10 @@
                             <constraint firstItem="hgL-hG-PQM" firstAttribute="trailing" secondItem="evF-GM-bH3" secondAttribute="trailing" constant="20" id="JM7-wv-tOb"/>
                             <constraint firstItem="WUI-lj-ZfI" firstAttribute="top" secondItem="evF-GM-bH3" secondAttribute="bottom" constant="10" id="MXP-Pt-vig"/>
                             <constraint firstItem="hgL-hG-PQM" firstAttribute="trailing" secondItem="WfN-GM-u1H" secondAttribute="trailing" constant="50" id="SBl-ZD-uFc"/>
+                            <constraint firstItem="QNf-fr-UT7" firstAttribute="leading" secondItem="hgL-hG-PQM" secondAttribute="leading" constant="30" id="Vow-5c-wFT"/>
+                            <constraint firstItem="WfN-GM-u1H" firstAttribute="top" secondItem="QNf-fr-UT7" secondAttribute="bottom" constant="20" id="W1f-wk-nx4"/>
                             <constraint firstItem="WUI-lj-ZfI" firstAttribute="centerX" secondItem="Xaq-4T-N78" secondAttribute="centerX" id="dPK-Ji-iOa"/>
+                            <constraint firstItem="hgL-hG-PQM" firstAttribute="trailing" secondItem="QNf-fr-UT7" secondAttribute="trailing" constant="30" id="gww-Ji-5Ks"/>
                             <constraint firstItem="evF-GM-bH3" firstAttribute="leading" secondItem="hgL-hG-PQM" secondAttribute="leading" constant="20" id="zeS-ov-0HV"/>
                         </constraints>
                     </view>
@@ -243,6 +253,7 @@
                         <outlet property="addNumberButton" destination="WUI-lj-ZfI" id="eIh-tw-T9f"/>
                         <outlet property="callButton" destination="lsl-UI-vnr" id="maP-MA-s1e"/>
                         <outlet property="numberLabel" destination="evF-GM-bH3" id="rh8-FX-XZ8"/>
+                        <outlet property="numpad" destination="QNf-fr-UT7" id="SLY-5h-aDO"/>
                         <outlet property="stackView" destination="WfN-GM-u1H" id="La0-0Q-ATB"/>
                     </connections>
                 </viewController>
@@ -595,29 +606,43 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k7P-kI-ERz" customClass="KeypadContainerViewContol" customModule="Recents" customModuleProvider="target">
+                                <rect key="frame" x="30" y="308" width="330" height="352"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="k7P-kI-ERz" secondAttribute="height" multiplier="15:16" id="fkh-1y-YZK"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sax-Ok-0mx"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="x1M-JA-yoF" secondAttribute="trailing" constant="20" id="07S-oI-qLm"/>
                             <constraint firstItem="8Qr-4i-yC6" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="50" id="1pN-FW-CtX"/>
+                            <constraint firstItem="8Qr-4i-yC6" firstAttribute="top" secondItem="k7P-kI-ERz" secondAttribute="bottom" constant="20" id="34N-g4-PhA"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="top" secondItem="sax-Ok-0mx" secondAttribute="top" constant="20" id="FMK-aM-z2T"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="UDy-NI-j4C" secondAttribute="trailing" constant="50" id="GSy-a4-8x7"/>
+                            <constraint firstItem="k7P-kI-ERz" firstAttribute="width" secondItem="k7P-kI-ERz" secondAttribute="height" multiplier="15:16" id="T5n-iq-n0G"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="bottom" secondItem="8Qr-4i-yC6" secondAttribute="bottom" constant="50" id="TB7-mi-XoI"/>
                             <constraint firstItem="J4K-NZ-AyJ" firstAttribute="centerX" secondItem="hp6-t7-1NI" secondAttribute="centerX" id="W4T-1b-f6a"/>
                             <constraint firstItem="x1M-JA-yoF" firstAttribute="top" secondItem="sax-Ok-0mx" secondAttribute="top" constant="20" id="a6D-7b-Q0Z"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="50" id="aqH-6R-Q8a"/>
+                            <constraint firstItem="k7P-kI-ERz" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="30" id="cja-uI-hEg"/>
                             <constraint firstItem="x1M-JA-yoF" firstAttribute="leading" secondItem="sax-Ok-0mx" secondAttribute="leading" constant="20" id="dtS-gA-ZaM"/>
                             <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="8Qr-4i-yC6" secondAttribute="trailing" constant="50" id="e1V-GS-tvv"/>
                             <constraint firstItem="UDy-NI-j4C" firstAttribute="centerX" secondItem="hp6-t7-1NI" secondAttribute="centerX" id="o2p-S8-4fs"/>
+                            <constraint firstItem="sax-Ok-0mx" firstAttribute="trailing" secondItem="k7P-kI-ERz" secondAttribute="trailing" constant="30" id="s1o-tp-7RM"/>
                             <constraint firstItem="J4K-NZ-AyJ" firstAttribute="centerY" secondItem="hp6-t7-1NI" secondAttribute="centerY" id="zmq-ei-h1b"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6fN-XF-lVm"/>
                     <connections>
+                        <outlet property="buttonsStackView" destination="J4K-NZ-AyJ" id="7Rq-Eg-fZk"/>
                         <outlet property="callLabel" destination="bjF-88-UtZ" id="31a-4A-VPv"/>
+                        <outlet property="detailsView" destination="UDy-NI-j4C" id="jMG-tm-t1M"/>
                         <outlet property="hideButton" destination="6OJ-Gf-woZ" id="etM-sa-c8V"/>
                         <outlet property="numberLabel" destination="x1M-JA-yoF" id="lFF-qd-p6T"/>
+                        <outlet property="numpad" destination="k7P-kI-ERz" id="DgH-Er-a49"/>
                         <outlet property="timerLabel" destination="JQY-YV-s75" id="vtP-68-SCq"/>
                     </connections>
                 </viewController>
