@@ -15,14 +15,15 @@ class ContactStore {
     }()
     
     init() {
-        do {
-            let data = try Data(contentsOf: contactsArchiveURL)
-            let decoder = JSONDecoder()
-            contacts = try decoder.decode([Contact].self, from: data)
-        } catch {
-            contacts = [Contact]()
-            print("Error reading items \(error)")
-        }
+        contacts = [Contact.init(name: "Emilia"), Contact.init(name: "Georgi"), Contact.init(name: "Daniela"), Contact.init(name: "Svetoslav"), Contact.init(name: "Dimitar")]
+//        do {
+//            let data = try Data(contentsOf: contactsArchiveURL)
+//            let decoder = JSONDecoder()
+//            contacts = try decoder.decode([Contact].self, from: data)
+//        } catch {
+//            contacts = [Contact]()
+//            print("Error reading items \(error)")
+//        }
     }
     
     var firstLetter: [Character] {
