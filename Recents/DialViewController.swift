@@ -1,32 +1,36 @@
 import UIKit
 
-class DialViewController: UIViewController {    
-    let reusableKeypad: ReusableNumpad = .fromNib()
-    
+var isDialController = true
+
+class DialViewController: UIViewController {
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var callButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
     @IBOutlet var addNumberButton: UIButton!
     
+    @IBOutlet var numpad: KeypadContainerViewContol!
+    
     var countryCodes = ["1", "365", "44"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .touchDown)
-        self.view.addSubview(reusableKeypad)
-        
-        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            reusableKeypad.topAnchor.constraint(equalTo: addNumberButton.bottomAnchor, constant: 20),
-            callButton.topAnchor.constraint(equalTo: reusableKeypad.bottomAnchor, constant: 20),
-            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
-        ])
+        isDialController = true
+        numpad.addTarget(self, action: #selector(keyEvent), for: .touchDown)
+        numpad.style = .dial
     }
     
-    @objc func keyEvent(_ sender: ReusableNumpad) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isDialController = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isDialController = false
+    }
+    
+    @objc func keyEvent(_ sender: KeypadContainerViewContol) {
         if numberLabel.text?.count != 0 {
             addNumberButton.isHidden = false
         }

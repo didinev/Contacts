@@ -70,6 +70,10 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
             let contact = contactStore.getContact(indexPath!)
             let callViewController = segue.destination as! CallViewController
             callViewController.call = contact.name
+        } else if segue.identifier == "contactInfo" {
+            let viewController = segue.destination as! ContactInfoViewController
+            let cell = sender as! UITableViewCell
+            viewController.contactName = cell.textLabel?.text
         }
     }
 }

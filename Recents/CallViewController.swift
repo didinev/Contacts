@@ -1,45 +1,43 @@
 import UIKit
 
 class CallViewController: UIViewController {
-    
+    var dialController = DialViewController()
     @IBOutlet var callLabel: UILabel!
     @IBOutlet var timerLabel: UILabel!
     var call: String!
-    
+    @IBOutlet var detailsView: UIView!
+    @IBOutlet var buttonsStackView: UIStackView!
     @IBOutlet var hideButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
-    
-    let reusableKeypad: ReusableNumpad = .fromNib()
+    @IBOutlet var numpad: KeypadContainerViewContol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reusableKeypad.addTarget(self, action: #selector(keyEvent), for: .allEvents)
-        self.view.addSubview(reusableKeypad)
-        reusableKeypad.isHidden = true
+        //dialController.isDialController = false
+        numpad.addTarget(self, action: #selector(keyEvent), for: .allEvents)
+        numpad.isHidden = true
+        numpad.style = .call
         hideButton.isEnabled = false
         hideButton.setTitle("", for: .disabled)
-        
-        reusableKeypad.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            reusableKeypad.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 120),
-            reusableKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            reusableKeypad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            reusableKeypad.heightAnchor.constraint(equalToConstant: 375)
-        ])
     }
     
-    @objc func keyEvent(_ sender: ReusableNumpad) {
+    @objc func keyEvent(_ sender: KeypadContainerViewContol) {
         numberLabel.text! += sender.keyPressed
     }
     
     @IBAction func openKeypad(_ sender: Any) {
-        reusableKeypad.isHidden = false
+        numberLabel.isHidden = false
+        detailsView.isHidden = true
+        buttonsStackView.isHidden = true
+        numpad.isHidden = false
         hideButton.isEnabled = true
     }
     
     @IBAction func hideKeypad(_ sender: Any) {
-        reusableKeypad.isHidden = true
+        numberLabel.isHidden = true
+        detailsView.isHidden = false
+        buttonsStackView.isHidden = false
+        numpad.isHidden = true
         hideButton.isEnabled = false
     }
     
