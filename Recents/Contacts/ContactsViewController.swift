@@ -1,7 +1,7 @@
 import UIKit
 
-class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
-    var contactStore = ContactStore()
+class ContactsViewController : UITableViewController, UISearchResultsUpdating {
+    var contactStore = ContactStore.shared
     let searchController = UISearchController()
     var filteredContacts: [Contact] = []
     
@@ -31,7 +31,7 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text?.lowercased() ?? ""
         filteredContacts = contactStore.contacts.filter { (contact: Contact) -> Bool in
-            return contact.name.lowercased().hasPrefix(searchText)
+            return contact.firstName!.lowercased().hasPrefix(searchText)
         }
         tableView.reloadData()
     }
@@ -44,7 +44,7 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection sectionIndex: Int) -> Int {
-        return isFiltering ? filteredContacts.count : contactStore.getRowsPerSection(sectionIndex)
+        return isFiltering ? filteredContacts.count : contactStore.getSectionRowsCount(sectionIndex)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -58,22 +58,125 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath)
         let contact = isFiltering ? filteredContacts[indexPath.row] : contactStore.getContact(indexPath)
-        cell.textLabel?.text = contact.name
+        cell.textLabel?.text = contact.firstName
         cell.textLabel?.font = .boldSystemFont(ofSize: 17)
         
         return cell
     }
-
+    
+    @IBAction func createContact(_ sender: Any) {
+        let contact = Contact(context: contactStore.persistentContainer.viewContext)
+        contact.firstName = "Georgi"
+        contact.lastName = "Tsonev"
+        contact.companyName = "Infinno"
+        
+        contact.otherData = """
+    {
+        "phoneNumbers": [
+            {
+                "type": "mobile",
+                "value": "0889 934 358"
+            },
+            {
+                "type": "home",
+                "value": "0887 432 962"
+            },
+            {
+                "type": "work",
+                "value": "0890 321 416"
+            }
+        ],
+        "emails": [
+            {
+                "type": "home",
+                "value": "sexy_bor4eto@abv.bg"
+            },
+            {
+                "type": "work",
+                "value": "dd@infinno.eu"
+            }
+        ],
+        "urls": [
+            {
+                "type": "home",
+                "value": "home.com"
+            },
+            {
+                "type": "work",
+                "value": "work.bg"
+            }
+        ],
+        "addresses": [
+            {
+                "type": "home",
+                "value": "Sofia"
+            },
+            {
+                "type": "work",
+                "value": "Levunovo"
+            }
+        ],
+        "birthdays": [
+           {
+               "type": "birthday",
+               "value": "27.05.2010"
+           }
+        ],
+        "dates": [
+           {
+               "type": "anniversary",
+               "value": "27.05.2010"
+           }
+        ]
+    }
+    """
+        
+        contactStore.allContacts[contact.firstName!.first!]?.append(contact)
+        do {
+            try contactStore.persistentContainer.viewContext.save()
+        } catch {
+            print("error")
+        }
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromContacts" {
             let indexPath = tableView.indexPathForSelectedRow
             let contact = contactStore.getContact(indexPath!)
             let callViewController = segue.destination as! CallViewController
-            callViewController.call = contact.name
+            callViewController.call = contact.firstName
         } else if segue.identifier == "contactInfo" {
+            let indexPath = tableView.indexPathForSelectedRow
+            let contact = contactStore.getContact(indexPath!)
             let viewController = segue.destination as! ContactInfoViewController
-            let cell = sender as! UITableViewCell
-            viewController.contactName = cell.textLabel?.text
+            viewController.contact = contact
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        contactStore.fetchContacts()
+//        tableView.reloadData()
+//    }
