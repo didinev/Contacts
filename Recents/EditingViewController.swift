@@ -35,7 +35,8 @@ class EditingViewController: UITableViewController {
     var contact: Contact!
     var contactInfo: ContactInfo?
     
-    var sectionRows = [
+    var sectionNames = [
+        "neshto",
         "add phone",
         "add email",
         "Ringtone",
@@ -53,31 +54,12 @@ class EditingViewController: UITableViewController {
         "Delete Contact",
     ]
     
-    var sections: [String: [(String, String)]] = [
-        "add phone": [],
-        "add email": [],
-        "add url": [],
-        "add address": [],
-        "add date": [],
-        "add birthday": [],
-        "add related name": [],
-        "add social profile": [],
-        "add instant message": []
-    ]
-    
     let tagController = TagsViewController()
     var currentTag = 1
     var isInitialCell = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        contactInfo?.phoneNumbers.forEach { sections["phone"]?.append(($0.type, $0.number))}
-        contactInfo?.emails.forEach { sections["email"]?.append(($0.type, $0.email))}
-        contactInfo?.urls.forEach { sections["url"]?.append(($0.type, $0.url))}
-        contactInfo?.addresses.forEach { sections["address"]?.append(($0.type, $0.address))}
-        contactInfo?.dates.forEach { sections["date"]?.append(($0.type, $0.date))}
-        contactInfo?.birthdays.forEach { sections["birthday"]?.append(($0.type, $0.date))}
         
         firstLetterLabel.text = "\(contact.firstName!.first!)"
         tableView.setEditing(true, animated: false)
@@ -88,27 +70,26 @@ class EditingViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        var sectionItems = getArrayPerSection(indexPath.section)
+
         if editingStyle == .delete {
-//            let commit = sectionRows[indexPath.row]
-////            self.viewContext.delete(commit)
-//            sectionRows.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-//            saveContext()
-            
-            sections[sectionRows[indexPath.section]]?.remove(at: indexPath.row)
-            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
+            sectionItems.remove(at: indexPath.row)
+//            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        
+
         if editingStyle == .insert {
             currentTag = currentTag + 1
             if currentTag >= tagController.tags.count {
                 currentTag = 0
             }
-            sections[sectionRows[indexPath.section]]?.insert((tagController.tags.first!, "nil"), at: indexPath.row)
-            tableView.insertRows(at: [IndexPath(row: sections[sectionRows[indexPath.section]]!.count - 1, section: indexPath.section)], with: .automatic)
+            let contactInfoItem = ContactInfoItem(type: tagController.tags[currentTag], value: "")
+            sectionItems.append(contactInfoItem)
+            
+            //tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+            tableView.insertRows(at: [IndexPath(row: sectionItems.count - 1, section: indexPath.section)], with: .automatic)
             isInitialCell = false
+            
         }
     }
     
@@ -128,24 +109,46 @@ class EditingViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionRows.count
+        return sectionNames.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionRows[section].count
+        if section == 0 {
+            return 3
+        }
+        
+        guard let _ = contactInfo else { return 1 }
+        
+        let sectionItems = getArrayPerSection(section)
+        return sectionItems.count
+    }
+    
+    func getArrayPerSection(_ section: Int) -> [ContactInfoItem] {
+        if contactInfo == nil {
+            return []
+        }
+        
+        switch section {
+        case 1:
+            return contactInfo!.phoneNumbers
+        case 2:
+            return contactInfo!.emails
+        case 5:
+            return contactInfo!.urls
+        case 6:
+            return contactInfo!.addresses
+        case 7:
+            return contactInfo!.birthdays
+        case 8:
+            return contactInfo!.dates
+        default:
+            return []
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.section == 12 ? 150 : 50
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 17.5
-//    }
-    
-//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 25
-//    }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UIView()
@@ -160,16 +163,13 @@ class EditingViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sectionName = sectionRows[indexPath.section]
+        let addButtonLabel = sectionNames[indexPath.section]
+        print(indexPath)
         
-        switch sectionName {
-        case "First Name", "Last Name", "Company":
-            print("dhsa")
+        switch indexPath.section {
+        case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldCell
-            cell.textField.placeholder = sectionName
-//            if sectionName == "First Name" {
-//                cell.textField.text = contact.firstName
-//            }
+            cell.textField.placeholder = addButtonLabel
             
             switch indexPath.row {
             case 0:
@@ -180,108 +180,45 @@ class EditingViewController: UITableViewController {
                 cell.textField.text = contact.companyName
             }
             return cell
-        case "Ringtone", "Text Tone":
+        case 3, 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelWithButtonCell", for: indexPath) as! ButtonCell
-            cell.txtLabel?.text = sectionName
+            cell.txtLabel?.text = addButtonLabel
             cell.accessoryType = .disclosureIndicator
             return cell
-        case "Notes":
+        case 12:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath)
             return cell
-        case "add phone", "add email", "add url", "add address", "add birthday", "add date", "add related name", "add social profile", "add instant message", "add field", "link contacts...", "Delete Contact":
-            let label = sectionRows[indexPath.section]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AddCells", for: indexPath) as! AddCell
-            //            cell.txtLabel.text = sections[sectionName]?[indexPath.row].0
-            cell.txtLabel.text = sections[label]?[indexPath.row].0
-            cell.txtLabel.textColor = cell.txtLabel?.text == "Delete Contact" ? .systemRed : .systemBlue
-            return cell
         default:
-            let label = sectionRows[indexPath.section]
-            
-//            if indexPath.row == sections[label]?.count || indexPath.section == 13 || indexPath.section == 14 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "AddCells", for: indexPath) as! AddCell
-//                //            cell.txtLabel.text = sections[sectionName]?[indexPath.row].0
-//                cell.txtLabel.text = label
-//                cell.txtLabel.textColor = cell.txtLabel?.text == "Delete Contact" ? .systemRed : .systemBlue
-//                return cell
-//            } else {
+            let sectionItems = getArrayPerSection(indexPath.section)
+            print(sectionItems.count)
+            if sectionItems.count == indexPath.row {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AddCells", for: indexPath) as! AddCell
+                cell.txtLabel.text = addButtonLabel
+                cell.txtLabel.textColor = cell.txtLabel?.text == "Delete Contact" ? .systemRed : .systemBlue
+                return cell
+            } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCells", for: indexPath) as! LabelCell
-                cell.txtLabel.text = sections[label]?[indexPath.row].1
-    //            cell.txtLabel.text = sectionName
+                let item = sectionItems[indexPath.row]
+                
+                cell.txtLabel.text = item.type
+                
                 cell.textField.increaseSize(cell.txtLabel)
-
+                cell.textField.text = item.value
+                
                 let gradient = CAGradientLayer()
                 gradient.colors = [UIColor.white.cgColor, UIColor.systemGray2.cgColor]
                 gradient.frame = CGRect(x: -5, y: 0, width: 1, height: cell.bounds.height)
                 cell.textField.layer.addSublayer(gradient)
-
+                
                 if !isInitialCell {
                     cell.textField.becomeFirstResponder()
                 }
                 
                 return cell
-            //}
-            
-            
-            
-//            if let text = sections[sectionName]?[indexPath.row].0 {
-//                print(text)
-//            }
-//            print(sections[label]?[indexPath.row].1)
-            
+            }
         }
-        
-//        switch sectionName {
-//        case "Ringtone", "Text Tone":
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelWithButtonCell", for: indexPath) as! ButtonCell
-//            cell.txtLabel?.text = sectionName
-//            cell.accessoryType = .disclosureIndicator
-//            return cell
-//        case "First Name", "Last Name", "Company":
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldCell
-//            cell.textField.placeholder = sectionName
-//
-//            switch sectionName {
-//            case "First Name":
-//                cell.textField.text = contact.firstName
-//            case "Last Name":
-//                cell.textField.text = contact.lastName
-//            default:
-//                cell.textField.text = contact.companyName
-//            }
-//            return cell
-//        case "Notes":
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath)
-//            return cell
-//        case "add phone", "add email", "add url", "add address", "add birthday", "add date", "add related name", "add social profile", "add instant message", "add field", "link contacts...", "Delete Contact":
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "AddCells", for: indexPath) as! AddCell
-////            cell.txtLabel.text = sections[sectionName]?[indexPath.row].0
-//            cell.txtLabel.text = sectionName
-//            cell.txtLabel.textColor = cell.txtLabel?.text == "Delete Contact" ? .systemRed : .systemBlue
-//            return cell
-//        default:
-//            let label = sectionRows[indexPath.section][indexPath.row]
-//            if let text = sections[sectionName]?[indexPath.row].0 {
-//                print(text)
-//            }
-////            print(sections[label]?[indexPath.row].1)
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCells", for: indexPath) as! LabelCell
-//            cell.txtLabel.text = sections[label]?[indexPath.row].1
-////            cell.txtLabel.text = sectionName
-//            cell.textField.increaseSize(cell.txtLabel)
-//
-//            let gradient = CAGradientLayer()
-//            gradient.colors = [UIColor.white.cgColor, UIColor.systemGray2.cgColor]
-//            gradient.frame = CGRect(x: -5, y: 0, width: 1, height: cell.bounds.height)
-//            cell.textField.layer.addSublayer(gradient)
-//
-//            if !isInitialCell {
-//                cell.textField.becomeFirstResponder()
-//            }
-//
-//            return cell
-//        }
     }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "contactInfo" {
@@ -292,5 +229,3 @@ class EditingViewController: UITableViewController {
         }
     }
 }
-
-

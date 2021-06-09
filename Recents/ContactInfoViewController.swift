@@ -32,36 +32,105 @@ class ContactInfoViewController: UITableViewController {
         [("Block this Caller", .basic)]
     ]
     
+    var info = """
+    {
+        "phoneNumbers": [
+            {
+                "type": "mobile",
+                "value": "0889 934 358"
+            },
+            {
+                "type": "home",
+                "value": "0887 432 962"
+            },
+            {
+                "type": "work",
+                "value": "0890 321 416"
+            }
+        ],
+        "emails": [
+            {
+                "type": "home",
+                "value": "sexy_bor4eto@abv.bg"
+            },
+            {
+                "type": "work",
+                "value": "dd@infinno.eu"
+            }
+        ],
+        "urls": [
+            {
+                "type": "home",
+                "value": "home.com"
+            },
+            {
+                "type": "work",
+                "value": "work.bg"
+            }
+        ],
+        "addresses": [
+            {
+                "type": "home",
+                "value": "Sofia"
+            },
+            {
+                "type": "work",
+                "value": "Levunovo"
+            }
+        ],
+        "birthdays": [
+           {
+               "type": "birthday",
+               "value": "27.05.2010"
+           }
+        ],
+        "dates": [
+           {
+               "type": "anniversary",
+               "value": "27.05.2010"
+           }
+        ]
+    }
+    """
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         do {
-            let jsonData = contact.otherData?.data(using: .utf8)
+            let jsonData = contact.otherData!.data(using: .utf8)
             contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
+            print(contactInfo!.phoneNumbers)
+//            print(contactInfo.phoneNumbers, contactInfo?.addresses, contactInfo?.birthdays, "arrays")
             
             sectionRows.insert([], at: 0)
-            contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.number), .phoneNumber)) }
+            contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
             
             sectionRows.insert([], at: 1)
-            contactInfo!.emails.forEach { sectionRows[1].append((($0.type, $0.email), .phoneNumber)) }
+            contactInfo!.emails.forEach { sectionRows[1].append((($0.type, $0.value), .phoneNumber)) }
             
             sectionRows.insert([], at: 2)
-            contactInfo!.urls.forEach { sectionRows[2].append((($0.type, $0.url), .phoneNumber)) }
+            contactInfo!.urls.forEach { sectionRows[2].append((($0.type, $0.value), .phoneNumber)) }
             
             sectionRows.insert([], at: 3)
-            contactInfo!.addresses.forEach { sectionRows[3].append((($0.type, $0.address), .phoneNumber)) }
+            contactInfo!.addresses.forEach { sectionRows[3].append((($0.type, $0.value), .phoneNumber)) }
             
             sectionRows.insert([], at: 4)
-            contactInfo!.birthdays.forEach { sectionRows[4].append((($0.type, $0.date), .phoneNumber)) }
+            contactInfo!.birthdays.forEach { sectionRows[4].append((($0.type, $0.value), .phoneNumber)) }
             
             sectionRows.insert([], at: 5)
-            contactInfo!.dates.forEach { sectionRows[5].append((($0.type, $0.date), .phoneNumber)) }
+            contactInfo!.dates.forEach { sectionRows[5].append((($0.type, $0.value), .phoneNumber)) }
         } catch {
             print(error)
         }
         
         contactFirstLetter.text = "\(contact.firstName!.first!)"
         contactNameLabel.text = contact.firstName
+        for el in sectionRows {
+            print(el)
+        }
+//        print(sectionRows.count, "asdasdf")
+//        print(contactInfo?.phoneNumbers.count, "phone numbers")
+//        print(contact.otherData, "other data")
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -95,7 +164,7 @@ class ContactInfoViewController: UITableViewController {
         switch sectionData.type {
         case .phoneNumber:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! InfoTextLabel
-            let cellData = sectionData.info as! (String, String)
+            let cellData = sectionRows[indexPath.section][indexPath.row].info as! (String, String)
             cell.typeLabel.text = "\(cellData.0)"
             cell.contentLabel.text = "\(cellData.1)"
 //            cell.textLabel?.text = "asd"

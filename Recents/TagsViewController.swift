@@ -30,7 +30,7 @@ class TagsViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.accessoryType = button.currentTitle == tags[indexPath.row] ? .checkmark : .none
-    }
+//    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.accessoryType = button.currentTitle == tags[indexPath.row] ? .checkmark : .none
+//    }
 }

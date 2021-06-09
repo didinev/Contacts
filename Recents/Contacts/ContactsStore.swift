@@ -3,17 +3,9 @@ import CoreData
 
 class ContactStore {
     static var shared = ContactStore()
-//    let contacts = [
-//        ("Daniela", "Palova", "infinno"),
-//        ("Dimitar", "Dinev", "infinno"),
-//        ("Emilia", "Nedyalkova", "infinno"),
-//        ("Georgi", "Tsonev", "infinno"),
-//        ("Svetoslav", "Kanchev", "infinno")
-//    ].map { Contacts(firstName: $0.0, lastName: $0.1, companyName: $0.2) }
-    
     var allContacts: Dictionary<Character, [Contact]>
     var sections: [Character]
-    let contacts: [Contact]
+    var contacts: [Contact] = []
     
     var contactsArchiveURL: URL = {
         let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -31,8 +23,11 @@ class ContactStore {
         return container
     }()
     
+
+    
     init() {
         let context = persistentContainer.viewContext
+        
         do {
             contacts = try context.fetch(Contact.fetchRequest())
             allContacts = Dictionary(grouping: contacts, by: { $0.firstName!.first! })
@@ -43,6 +38,19 @@ class ContactStore {
             contacts = []
             print(error)
         }
+        
+//        let entityNames = persistentContainer.managedObjectModel.entities.map({ $0.name!})
+//         entityNames.forEach { entityName in
+//            let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+//            let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+//
+//            do {
+//                try context.execute(deleteRequest)
+//                try context.save()
+//            } catch {
+//                // error
+//            }
+//        }
     }
     
 //    init() {
@@ -81,4 +89,30 @@ class ContactStore {
         let firstLetter = sections[indexPath.section]
         return allContacts[firstLetter]![indexPath.row]
     }
+    
+    func saveChanges() {
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            print(error)
+        }
+    }
 }
+
+
+
+
+//func fetchContacts() {
+//    let context = persistentContainer.viewContext
+//    
+//    do {
+//        contacts = try context.fetch(Contact.fetchRequest())
+//        allContacts = Dictionary(grouping: contacts, by: { $0.firstName!.first! })
+//        sections = Set(contacts.map { $0.firstName!.first! }).sorted()
+//    } catch {
+//        allContacts = Dictionary()
+//        sections = []
+//        contacts = []
+//        print(error)
+//    }
+//}

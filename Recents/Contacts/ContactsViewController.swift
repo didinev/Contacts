@@ -1,6 +1,6 @@
 import UIKit
 
-class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
+class ContactsViewController : UITableViewController, UISearchResultsUpdating {
     var contactStore = ContactStore.shared
     let searchController = UISearchController()
     var filteredContacts: [Contact] = []
@@ -66,65 +66,66 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
     
     @IBAction func createContact(_ sender: Any) {
         let contact = Contact(context: contactStore.persistentContainer.viewContext)
-        contact.firstName = "Svetoslav"
-        contact.lastName = "Kanchev"
-        contact.companyName = "infinno"
+        contact.firstName = "Georgi"
+        contact.lastName = "Tsonev"
+        contact.companyName = "Infinno"
+        
         contact.otherData = """
     {
         "phoneNumbers": [
             {
                 "type": "mobile",
-                "number": "0889 934 358"
+                "value": "0889 934 358"
             },
             {
                 "type": "home",
-                "number": "0887 432 962"
+                "value": "0887 432 962"
             },
             {
                 "type": "work",
-                "number": "0890 321 416"
+                "value": "0890 321 416"
             }
         ],
         "emails": [
             {
                 "type": "home",
-                "email": "sexy_bor4eto@abv.bg"
+                "value": "sexy_bor4eto@abv.bg"
             },
             {
                 "type": "work",
-                "email": "dd@infinno.eu"
+                "value": "dd@infinno.eu"
             }
         ],
         "urls": [
             {
                 "type": "home",
-                "url": "home.com"
+                "value": "home.com"
             },
             {
                 "type": "work",
-                "url": "work.bg"
+                "value": "work.bg"
             }
         ],
         "addresses": [
             {
                 "type": "home",
-                "address": "Sofia"
+                "value": "Sofia"
             },
             {
                 "type": "work",
-                "address": "Levunovo"
+                "value": "Levunovo"
             }
         ],
         "birthdays": [
            {
                "type": "birthday",
-               "date": "27.05.2010"
+               "value": "27.05.2010"
            }
         ],
         "dates": [
            {
                "type": "anniversary",
-               "date": "27.05.2010"
+               "value": "27.05.2010"
            }
         ]
     }
@@ -138,7 +139,7 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
         }
     }
     
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromContacts" {
             let indexPath = tableView.indexPathForSelectedRow
@@ -150,8 +151,32 @@ class ConstactsViewController : UITableViewController, UISearchResultsUpdating {
             let contact = contactStore.getContact(indexPath!)
             let viewController = segue.destination as! ContactInfoViewController
             viewController.contact = contact
-//            let cell = sender as! UITableViewCell
-//            viewController.contactName = cell.textLabel?.text
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        contactStore.fetchContacts()
+//        tableView.reloadData()
+//    }

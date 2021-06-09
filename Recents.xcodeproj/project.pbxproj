@@ -21,7 +21,7 @@
 		68887AD82649547A0060BD8D /* KeypadContainerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68887AD72649547A0060BD8D /* KeypadContainerViewControl.swift */; };
 		6896162426651536007E291D /* ContactInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6896162326651536007E291D /* ContactInfoViewController.swift */; };
 		6896162626664A69007E291D /* EditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6896162526664A69007E291D /* EditingViewController.swift */; };
-		68A0F299266A2800003561F7 /* Contaact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A0F298266A2800003561F7 /* Contaact.swift */; };
+		68A0F299266A2800003561F7 /* ContactInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A0F298266A2800003561F7 /* ContactInfo.swift */; };
 		68A0F29B266A467C003561F7 /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A0F29A266A467C003561F7 /* CellType.swift */; };
 		68A2EEFF2641C28100C27DA9 /* ReusableNumpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */; };
 		68A2EF022641C29A00C27DA9 /* ReusableNumpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */; };
@@ -50,7 +50,7 @@
 		68887AD72649547A0060BD8D /* KeypadContainerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadContainerViewControl.swift; sourceTree = "<group>"; };
 		6896162326651536007E291D /* ContactInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoViewController.swift; sourceTree = "<group>"; };
 		6896162526664A69007E291D /* EditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingViewController.swift; sourceTree = "<group>"; };
-		68A0F298266A2800003561F7 /* Contaact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contaact.swift; sourceTree = "<group>"; };
+		68A0F298266A2800003561F7 /* ContactInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfo.swift; sourceTree = "<group>"; };
 		68A0F29A266A467C003561F7 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReusableNumpad.xib; sourceTree = "<group>"; };
 		68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableNumpad.swift; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 			children = (
 				68880E97262DC8E000824AF2 /* ContactsViewController.swift */,
 				68880E9A262DC8FC00824AF2 /* ContactsStore.swift */,
-				68A0F298266A2800003561F7 /* Contaact.swift */,
+				68A0F298266A2800003561F7 /* ContactInfo.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 				68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */,
 				68F21EB426679997007F306E /* TagsViewController.swift in Sources */,
 				68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */,
-				68A0F299266A2800003561F7 /* Contaact.swift in Sources */,
+				68A0F299266A2800003561F7 /* ContactInfo.swift in Sources */,
 				6896162626664A69007E291D /* EditingViewController.swift in Sources */,
 				68A2EF022641C29A00C27DA9 /* ReusableNumpad.swift in Sources */,
 				68887AD82649547A0060BD8D /* KeypadContainerViewControl.swift in Sources */,
