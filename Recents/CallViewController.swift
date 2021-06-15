@@ -11,6 +11,8 @@ class CallViewController: UIViewController {
     @IBOutlet var numberLabel: UILabel!
     @IBOutlet var numpad: KeypadContainerViewContol!
     
+    var phoneNumber: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //dialController.isDialController = false
@@ -19,6 +21,7 @@ class CallViewController: UIViewController {
         numpad.style = .call
         hideButton.isEnabled = false
         hideButton.setTitle("", for: .disabled)
+        numberLabel.text = phoneNumber
     }
     
     @objc func keyEvent(_ sender: KeypadContainerViewContol) {
@@ -65,16 +68,16 @@ class CallViewController: UIViewController {
     }
     
     @IBAction func endCall(_ sender: Any) {
-        do {
-            let recentStore = RecentStore()
-            recentStore.allCalls.insert(Call(name: callLabel.text!, typeOfCall: "Dial", date: Date(), isMissed: false, isOutgoing: true), at: 0)
-            let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .formatted(RecentStore.formatter)
-            let JsonData = try encoder.encode(recentStore.allCalls)
-            try JsonData.write(to: recentStore.callsArchiveURL)
-        } catch {
-            print(error)
-        }
+//        do {
+//            let recentStore = RecentStore()
+//            recentStore.allCalls.insert(RecentCall(name: callLabel.text!, typeOfCall: "Dial", date: Date(), isMissed: false, isOutgoing: true), at: 0)
+//            let encoder = JSONEncoder()
+//            encoder.dateEncodingStrategy = .formatted(RecentStore.formatter)
+//            let JsonData = try encoder.encode(recentStore.allCalls)
+//            try JsonData.write(to: recentStore.callsArchiveURL)
+//        } catch {
+//            print(error)
+//        }
         
         self.dismiss(animated: false, completion: nil)
     }

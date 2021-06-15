@@ -28,6 +28,13 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
         addTopCardLayer()
     }
     
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+    
+            contactStore.updateContacts()
+            tableView.reloadData()
+        }
+    
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text?.lowercased() ?? ""
         filteredContacts = contactStore.contacts.filter { (contact: Contact) -> Bool in
@@ -64,82 +71,6 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
         return cell
     }
     
-    @IBAction func createContact(_ sender: Any) {
-        let contact = Contact(context: contactStore.persistentContainer.viewContext)
-        contact.firstName = "Georgi"
-        contact.lastName = "Tsonev"
-        contact.companyName = "Infinno"
-        
-        contact.otherData = """
-    {
-        "phoneNumbers": [
-            {
-                "type": "mobile",
-                "value": "0889 934 358"
-            },
-            {
-                "type": "home",
-                "value": "0887 432 962"
-            },
-            {
-                "type": "work",
-                "value": "0890 321 416"
-            }
-        ],
-        "emails": [
-            {
-                "type": "home",
-                "value": "sexy_bor4eto@abv.bg"
-            },
-            {
-                "type": "work",
-                "value": "dd@infinno.eu"
-            }
-        ],
-        "urls": [
-            {
-                "type": "home",
-                "value": "home.com"
-            },
-            {
-                "type": "work",
-                "value": "work.bg"
-            }
-        ],
-        "addresses": [
-            {
-                "type": "home",
-                "value": "Sofia"
-            },
-            {
-                "type": "work",
-                "value": "Levunovo"
-            }
-        ],
-        "birthdays": [
-           {
-               "type": "birthday",
-               "value": "27.05.2010"
-           }
-        ],
-        "dates": [
-           {
-               "type": "anniversary",
-               "value": "27.05.2010"
-           }
-        ]
-    }
-    """
-        
-        contactStore.allContacts[contact.firstName!.first!]?.append(contact)
-        do {
-            try contactStore.persistentContainer.viewContext.save()
-        } catch {
-            print("error")
-        }
-    }
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "fromContacts" {
             let indexPath = tableView.indexPathForSelectedRow
@@ -151,7 +82,12 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
             let contact = contactStore.getContact(indexPath!)
             let viewController = segue.destination as! ContactInfoViewController
             viewController.contact = contact
+        } else if segue.identifier == "addContact" {
+            let viewController = segue.destination as! EditingViewController
+            viewController.contact = Contact(context: contactStore.persistentContainer.viewContext)
+            viewController.contactInfo = ContactInfo()
         }
+        
     }
 }
 
@@ -180,3 +116,98 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
 //        contactStore.fetchContacts()
 //        tableView.reloadData()
 //    }
+
+
+
+//@IBAction func createContact(_ sender: Any) {
+//    let contact = Contact(context: contactStore.persistentContainer.viewContext)
+//    contact.firstName = "Dimitar"
+//    contact.lastName = "Dinev"
+//    contact.companyName = "Infinno"
+//
+//    contact.otherData = """
+//{
+//    "phoneNumbers": [
+//        {
+//            "type": "mobile",
+//            "value": "0889 934 358"
+//        },
+//        {
+//            "type": "home",
+//            "value": "0887 432 962"
+//        },
+//        {
+//            "type": "work",
+//            "value": "0890 321 416"
+//        }
+//    ],
+//    "emails": [
+//        {
+//            "type": "home",
+//            "value": "sexy_bor4eto@abv.bg"
+//        },
+//        {
+//            "type": "work",
+//            "value": "dd@infinno.eu"
+//        }
+//    ],
+//    "urls": [
+//        {
+//            "type": "home",
+//            "value": "home.com"
+//        },
+//        {
+//            "type": "work",
+//            "value": "work.bg"
+//        }
+//    ],
+//    "addresses": [
+//        {
+//            "type": "home",
+//            "value": "Sofia"
+//        },
+//        {
+//            "type": "work",
+//            "value": "Levunovo"
+//        }
+//    ],
+//    "birthdays": [
+//       {
+//           "type": "birthday",
+//           "value": "27.05.2010"
+//       }
+//    ],
+//    "dates": [
+//       {
+//           "type": "anniversary",
+//           "value": "27.05.2010"
+//       }
+//    ],
+//        "relatedNames": [
+//           {
+//               "type": "birthday",
+//               "value": "27.05.2010"
+//           }
+//        ],
+//        "socialProfiles": [
+//           {
+//               "type": "birthday",
+//               "value": "27.05.2010"
+//           }
+//        ],
+//        "instantMessages": [
+//           {
+//               "type": "birthday",
+//               "value": "27.05.2010"
+//           }
+//        ],
+//}
+//"""
+//
+//    contactStore.allContacts[contact.firstName!.first!]?.append(contact)
+//    do {
+//        try contactStore.persistentContainer.viewContext.save()
+//    } catch {
+//        print("error")
+//    }
+//}

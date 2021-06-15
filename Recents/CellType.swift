@@ -13,12 +13,12 @@ class InfoTextLabel: UITableViewCell {
 }
 
 class TextFieldCell: UITableViewCell {
-    @IBOutlet var textField: UITextField!
+    @IBOutlet var textField: CustomTextField!
 }
 
 class LabelCell: UITableViewCell {
     @IBOutlet var txtLabel: UILabel!
-    @IBOutlet var textField: UITextField!
+    @IBOutlet var textField: CustomTextField!
 }
 
 class ButtonCell: UITableViewCell {
@@ -27,5 +27,12 @@ class ButtonCell: UITableViewCell {
 
 class AddCell: UITableViewCell {
     @IBOutlet var txtLabel: UILabel!
-    
+}
+
+class CustomTextField: UITextField {
+    var indexPath = IndexPath()
+}
+
+class DeleteCell: UITableViewCell {
+    @IBOutlet var btn: UIButton!
 }

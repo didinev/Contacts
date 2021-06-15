@@ -10,7 +10,7 @@ class RecentViewController: UITableViewController {
     
     @IBOutlet var leftNavBarButton: UIBarButtonItem!
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
         
@@ -53,10 +53,10 @@ class RecentViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecentCell", for: indexPath) as! RecentCell
         let call = segmentControl.selectedSegmentIndex == 0 ? allCalls.getCall(at: indexPath) : allCalls.getMissedCall(at: indexPath)
         cell.nameLabel.textColor = call.isMissed ? .red : .black
-        cell.nameLabel.text = call.name
+        cell.nameLabel.text = call.contactName
         cell.isOutgoingIcon.isHidden = !call.isOutgoing
-        cell.typeOfCallLabel.text = call.typeOfCall
-        cell.dateLabel.text = call.formattedDate
+        cell.typeOfCallLabel.text = call.callType
+        cell.dateLabel.text = getDate(call.date ?? Date())
         
         return cell
     }
@@ -73,5 +73,37 @@ class RecentViewController: UITableViewController {
     func restore() {
         tableView.backgroundView = nil
         tableView.separatorStyle = .singleLine
+    }
+    
+    let todayDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    let lastWeekDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter
+    }()
+    
+    let moreThanWeekDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d.MM.yy"
+        return formatter
+    }()
+
+    let weekDuration = TimeInterval(60 * 60 * 24 * 7)
+    
+    func getDate(_ date: Date) -> String {
+        if Calendar.current.isDateInToday(date) {
+            return todayDateFormatter.string(from: date)
+        } else if Calendar.current.isDateInYesterday(date) {
+            return "Yesterday"
+        } else if date.distance(to: Date()) < weekDuration {
+            return lastWeekDateFormatter.string(from: date)
+        } else {
+            return moreThanWeekDateFormatter.string(from: date)
+        }
     }
 }

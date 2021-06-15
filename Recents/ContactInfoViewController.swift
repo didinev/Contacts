@@ -22,8 +22,6 @@ class ContactInfoViewController: UITableViewController {
     var contact: Contact!
     var contactInfo: ContactInfo?
     
-    var contactName: String!
-    
     var sectionRows: [[(info: Any, type: CellType)]] = [
         [("Notes", .notes)],
         [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favorites", .basic)],
@@ -32,105 +30,64 @@ class ContactInfoViewController: UITableViewController {
         [("Block this Caller", .basic)]
     ]
     
-    var info = """
-    {
-        "phoneNumbers": [
-            {
-                "type": "mobile",
-                "value": "0889 934 358"
-            },
-            {
-                "type": "home",
-                "value": "0887 432 962"
-            },
-            {
-                "type": "work",
-                "value": "0890 321 416"
-            }
-        ],
-        "emails": [
-            {
-                "type": "home",
-                "value": "sexy_bor4eto@abv.bg"
-            },
-            {
-                "type": "work",
-                "value": "dd@infinno.eu"
-            }
-        ],
-        "urls": [
-            {
-                "type": "home",
-                "value": "home.com"
-            },
-            {
-                "type": "work",
-                "value": "work.bg"
-            }
-        ],
-        "addresses": [
-            {
-                "type": "home",
-                "value": "Sofia"
-            },
-            {
-                "type": "work",
-                "value": "Levunovo"
-            }
-        ],
-        "birthdays": [
-           {
-               "type": "birthday",
-               "value": "27.05.2010"
-           }
-        ],
-        "dates": [
-           {
-               "type": "anniversary",
-               "value": "27.05.2010"
-           }
-        ]
+    var sectionRowsCopy: [[(info: Any, type: CellType)]] = [
+        [("Notes", .notes)],
+        [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favorites", .basic)],
+        [("Add to Emergency Contacts", .basic)],
+        [("Share My Location", .basic)],
+        [("Block this Caller", .basic)]
+    ]
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        contactFirstLetter.text = "\(contact.firstName?.first! ?? "n")"
+        contactNameLabel.text = contact.firstName
+        updateData()
+        tableView.reloadData()
     }
-    """
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        updateData()
+        contactFirstLetter.text = "\(contact.firstName?.first! ?? "n")"
+        contactNameLabel.text = contact.firstName
+    }
+    
+    func updateData() {
+        contactNameLabel.text = contact.firstName
+        sectionRows = sectionRowsCopy
         do {
-            let jsonData = contact.otherData!.data(using: .utf8)
+            let jsonData = contact.otherData?.data(using: .utf8)
             contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
-            print(contactInfo!.phoneNumbers)
-//            print(contactInfo.phoneNumbers, contactInfo?.addresses, contactInfo?.birthdays, "arrays")
-            
-            sectionRows.insert([], at: 0)
-            contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
-            
-            sectionRows.insert([], at: 1)
-            contactInfo!.emails.forEach { sectionRows[1].append((($0.type, $0.value), .phoneNumber)) }
-            
-            sectionRows.insert([], at: 2)
-            contactInfo!.urls.forEach { sectionRows[2].append((($0.type, $0.value), .phoneNumber)) }
-            
-            sectionRows.insert([], at: 3)
-            contactInfo!.addresses.forEach { sectionRows[3].append((($0.type, $0.value), .phoneNumber)) }
-            
-            sectionRows.insert([], at: 4)
-            contactInfo!.birthdays.forEach { sectionRows[4].append((($0.type, $0.value), .phoneNumber)) }
-            
-            sectionRows.insert([], at: 5)
-            contactInfo!.dates.forEach { sectionRows[5].append((($0.type, $0.value), .phoneNumber)) }
+            if !contactInfo!.dates.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.dates.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
+            if !contactInfo!.birthdays.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.birthdays.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
+            if !contactInfo!.addresses.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.addresses.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
+            if !contactInfo!.urls.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.urls.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
+            if !contactInfo!.emails.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.emails.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
+            if !contactInfo!.phoneNumbers.isEmpty {
+                sectionRows.insert([], at: 0)
+                contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+            }
         } catch {
             print(error)
         }
-        
-        contactFirstLetter.text = "\(contact.firstName!.first!)"
-        contactNameLabel.text = contact.firstName
-        for el in sectionRows {
-            print(el)
-        }
-//        print(sectionRows.count, "asdasdf")
-//        print(contactInfo?.phoneNumbers.count, "phone numbers")
-//        print(contact.otherData, "other data")
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -158,31 +115,25 @@ class ContactInfoViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell: UITableViewCell
         let sectionData = sectionRows[indexPath.section][indexPath.row]
         
         switch sectionData.type {
-        case .phoneNumber:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! InfoTextLabel
-            let cellData = sectionRows[indexPath.section][indexPath.row].info as! (String, String)
-            cell.typeLabel.text = "\(cellData.0)"
-            cell.contentLabel.text = "\(cellData.1)"
-//            cell.textLabel?.text = "asd"
-            return cell
-//            cell.textLabel?.text = name
-        case .notes:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
-            return cell
-//            cell.textLabel?.text = name
-//            cell.textLabel?.textColor = UIColor.lightGray
-        default:
+        case .basic:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelWithButtonCell", for: indexPath)
             cell.textLabel?.text = sectionData.info as? String
             cell.textLabel?.textColor = cell.textLabel?.text == "Block this Caller" ? .systemRed : .systemBlue
             return cell
+        case .notes:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
+            return cell
+        default:
+//            print(sectionRows)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! InfoTextLabel
+            let cellData = sectionRows[indexPath.section][indexPath.row].info as! (String, String)
+            cell.typeLabel.text = "\(cellData.0)"
+            cell.contentLabel.text = "\(cellData.1)"
+            return cell
         }
-        
-//        return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -193,8 +144,54 @@ class ContactInfoViewController: UITableViewController {
             let viewController = segue.destination as! EditingViewController
             viewController.contact = contact
             viewController.contactInfo = contactInfo
+        case "callContact":
+            let callController = segue.destination as! CallViewController
+//            let pressedCell = sender as! InfoCell
+            let indexPath = tableView.indexPathForSelectedRow!
+            if indexPath.section != 0 {
+                return
+            }
+            let callLabel = "\(contact.firstName!) \(contact.lastName ?? "")"
+            let callType = contactInfo!.phoneNumbers[indexPath.row].type
+            callController.phoneNumber = callLabel
+            RecentStore.shared.addCall(callLabel, callType, Date())
+
         default:
             preconditionFailure("Unexpected segue identifier.")
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+//do {
+//            let jsonData = contact.otherData?.data(using: .utf8)
+//            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
+//
+//            sectionRows.insert([], at: 0)
+//            contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
+//
+//            sectionRows.insert([], at: 1)
+//            contactInfo!.emails.forEach { sectionRows[1].append((($0.type, $0.value), .phoneNumber)) }
+//
+//            sectionRows.insert([], at: 2)
+//            contactInfo!.urls.forEach { sectionRows[2].append((($0.type, $0.value), .phoneNumber)) }
+//
+//            sectionRows.insert([], at: 3)
+//            contactInfo!.addresses.forEach { sectionRows[3].append((($0.type, $0.value), .phoneNumber)) }
+//
+//            sectionRows.insert([], at: 4)
+//            contactInfo!.birthdays.forEach { sectionRows[4].append((($0.type, $0.value), .phoneNumber)) }
+//
+//            sectionRows.insert([], at: 5)
+//            contactInfo!.dates.forEach { sectionRows[5].append((($0.type, $0.value), .phoneNumber)) }
+//        } catch {
+//            print(error)
+//        }
