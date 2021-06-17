@@ -19,12 +19,14 @@ class ContactInfoViewController: UITableViewController {
     @IBOutlet var navBar: UINavigationItem!
     @IBOutlet var titleView: UIView!
     
+    static var shared = ContactInfoViewController()
+    
     var contact: Contact!
     var contactInfo: ContactInfo?
     
     var sectionRows: [[(info: Any, type: CellType)]] = [
         [("Notes", .notes)],
-        [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favorites", .basic)],
+        [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favourites", .basic)],
         [("Add to Emergency Contacts", .basic)],
         [("Share My Location", .basic)],
         [("Block this Caller", .basic)]
@@ -32,7 +34,7 @@ class ContactInfoViewController: UITableViewController {
     
     var sectionRowsCopy: [[(info: Any, type: CellType)]] = [
         [("Notes", .notes)],
-        [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favorites", .basic)],
+        [("Send Message", .basic), ("Share Contact", .basic), ("Add to Favourites", .basic)],
         [("Add to Emergency Contacts", .basic)],
         [("Share My Location", .basic)],
         [("Block this Caller", .basic)]
@@ -41,7 +43,7 @@ class ContactInfoViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        contactFirstLetter.text = "\(contact.firstName?.first! ?? "n")"
+        contactFirstLetter.text = "\(contact.firstName!.first!)"
         contactNameLabel.text = contact.firstName
         updateData()
         tableView.reloadData()
@@ -51,12 +53,12 @@ class ContactInfoViewController: UITableViewController {
         super.viewDidLoad()
 
         updateData()
-        contactFirstLetter.text = "\(contact.firstName?.first! ?? "n")"
+        contactFirstLetter.text = "\(contact.firstName!.first!)"
         contactNameLabel.text = contact.firstName
     }
     
     func updateData() {
-        contactNameLabel.text = contact.firstName
+        contactNameLabel.text = contact!.firstName
         sectionRows = sectionRowsCopy
         do {
             let jsonData = contact.otherData?.data(using: .utf8)
@@ -127,7 +129,6 @@ class ContactInfoViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
             return cell
         default:
-//            print(sectionRows)
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! InfoTextLabel
             let cellData = sectionRows[indexPath.section][indexPath.row].info as! (String, String)
             cell.typeLabel.text = "\(cellData.0)"
@@ -146,7 +147,6 @@ class ContactInfoViewController: UITableViewController {
             viewController.contactInfo = contactInfo
         case "callContact":
             let callController = segue.destination as! CallViewController
-//            let pressedCell = sender as! InfoCell
             let indexPath = tableView.indexPathForSelectedRow!
             if indexPath.section != 0 {
                 return
@@ -155,43 +155,21 @@ class ContactInfoViewController: UITableViewController {
             let callType = contactInfo!.phoneNumbers[indexPath.row].type
             callController.phoneNumber = callLabel
             RecentStore.shared.addCall(callLabel, callType, Date())
-
         default:
             preconditionFailure("Unexpected segue identifier.")
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if let cell = cell, cell.textLabel?.text == "Add to Favourites" {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let myAlert = storyboard.instantiateViewController(withIdentifier: "AlertViewController")
+            myAlert.modalPresentationStyle = .popover
+            myAlert.modalTransitionStyle = .crossDissolve
+            let vc = myAlert as! AlertViewController
+            vc.contactInfo = self.contactInfo
+            self.present(myAlert, animated: true)
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-//do {
-//            let jsonData = contact.otherData?.data(using: .utf8)
-//            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
-//
-//            sectionRows.insert([], at: 0)
-//            contactInfo!.phoneNumbers.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }
-//
-//            sectionRows.insert([], at: 1)
-//            contactInfo!.emails.forEach { sectionRows[1].append((($0.type, $0.value), .phoneNumber)) }
-//
-//            sectionRows.insert([], at: 2)
-//            contactInfo!.urls.forEach { sectionRows[2].append((($0.type, $0.value), .phoneNumber)) }
-//
-//            sectionRows.insert([], at: 3)
-//            contactInfo!.addresses.forEach { sectionRows[3].append((($0.type, $0.value), .phoneNumber)) }
-//
-//            sectionRows.insert([], at: 4)
-//            contactInfo!.birthdays.forEach { sectionRows[4].append((($0.type, $0.value), .phoneNumber)) }
-//
-//            sectionRows.insert([], at: 5)
-//            contactInfo!.dates.forEach { sectionRows[5].append((($0.type, $0.value), .phoneNumber)) }
-//        } catch {
-//            print(error)
-//        }

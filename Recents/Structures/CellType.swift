@@ -36,3 +36,19 @@ class CustomTextField: UITextField {
 class DeleteCell: UITableViewCell {
     @IBOutlet var btn: UIButton!
 }
+
+class FavouriteCell: UITableViewCell {
+    @IBOutlet var initialsLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var phoneTypeLabel: UILabel!
+}
+
+class AddToFavouritesCell: UITableViewCell {
+    @IBOutlet var imgView: UIImageView!
+    @IBOutlet var addType: UILabel!
+}
+
+class DataCell: UITableViewCell {
+    @IBOutlet var addType: UILabel!
+    @IBOutlet var value: UILabel!
+}

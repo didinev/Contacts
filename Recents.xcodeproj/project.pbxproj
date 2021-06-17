@@ -29,9 +29,14 @@
 		68BFAAFA266E559E00E22604 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 68BFAAF8266E559E00E22604 /* DataModel.xcdatamodeld */; };
 		68BFAAFD266E560E00E22604 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BFAAFB266E560E00E22604 /* Contact+CoreDataClass.swift */; };
 		68BFAAFE266E560E00E22604 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BFAAFC266E560E00E22604 /* Contact+CoreDataProperties.swift */; };
+		68F037A3267A20D7003BA915 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F037A2267A20D7003BA915 /* AlertViewController.swift */; };
 		68F21EB426679997007F306E /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F21EB326679997007F306E /* TagsViewController.swift */; };
 		68FC5EAF2677613E003FB49D /* RecentCall+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EAD2677613E003FB49D /* RecentCall+CoreDataClass.swift */; };
 		68FC5EB02677613E003FB49D /* RecentCall+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EAE2677613E003FB49D /* RecentCall+CoreDataProperties.swift */; };
+		68FC5EB22678D04A003FB49D /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EB12678D04A003FB49D /* FavouritesViewController.swift */; };
+		68FC5EB42678D059003FB49D /* FavouritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EB32678D059003FB49D /* FavouritesStore.swift */; };
+		68FC5EB92678DE5F003FB49D /* Favourite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EB72678DE5F003FB49D /* Favourite+CoreDataClass.swift */; };
+		68FC5EBA2678DE5F003FB49D /* Favourite+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FC5EB82678DE5F003FB49D /* Favourite+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,9 +64,14 @@
 		68BFAAF9266E559E00E22604 /* ContactDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDataModel.xcdatamodel; sourceTree = "<group>"; };
 		68BFAAFB266E560E00E22604 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
 		68BFAAFC266E560E00E22604 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		68F037A2267A20D7003BA915 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		68F21EB326679997007F306E /* TagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
 		68FC5EAD2677613E003FB49D /* RecentCall+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentCall+CoreDataClass.swift"; sourceTree = "<group>"; };
 		68FC5EAE2677613E003FB49D /* RecentCall+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentCall+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		68FC5EB12678D04A003FB49D /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
+		68FC5EB32678D059003FB49D /* FavouritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesStore.swift; sourceTree = "<group>"; };
+		68FC5EB72678DE5F003FB49D /* Favourite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favourite+CoreDataClass.swift"; sourceTree = "<group>"; };
+		68FC5EB82678DE5F003FB49D /* Favourite+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favourite+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +88,8 @@
 		68106B1A2629ADC60019E4E0 = {
 			isa = PBXGroup;
 			children = (
+				68FC5EB72678DE5F003FB49D /* Favourite+CoreDataClass.swift */,
+				68FC5EB82678DE5F003FB49D /* Favourite+CoreDataProperties.swift */,
 				68FC5EAD2677613E003FB49D /* RecentCall+CoreDataClass.swift */,
 				68FC5EAE2677613E003FB49D /* RecentCall+CoreDataProperties.swift */,
 				68BFAAFB266E560E00E22604 /* Contact+CoreDataClass.swift */,
@@ -98,21 +110,13 @@
 		68106B252629ADC60019E4E0 /* Recents */ = {
 			isa = PBXGroup;
 			children = (
+				68FC5EBB2678DE83003FB49D /* Structures */,
+				68FC5EB62678DE1A003FB49D /* Models */,
+				68FC5EB52678DDE9003FB49D /* ViewControllers */,
+				68106B2C2629ADC60019E4E0 /* Main.storyboard */,
+				68BFAAF8266E559E00E22604 /* DataModel.xcdatamodeld */,
 				68106B262629ADC60019E4E0 /* AppDelegate.swift */,
 				68106B282629ADC60019E4E0 /* SceneDelegate.swift */,
-				68106B2C2629ADC60019E4E0 /* Main.storyboard */,
-				68F21EB326679997007F306E /* TagsViewController.swift */,
-				6896162326651536007E291D /* ContactInfoViewController.swift */,
-				68BFAAF8266E559E00E22604 /* DataModel.xcdatamodeld */,
-				68A0F29A266A467C003561F7 /* CellType.swift */,
-				6896162526664A69007E291D /* EditingViewController.swift */,
-				68887AD72649547A0060BD8D /* KeypadContainerViewControl.swift */,
-				68BBEFD5263315D100EE1501 /* CallViewController.swift */,
-				68BBEFD2263303DA00EE1501 /* DialViewController.swift */,
-				68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */,
-				68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */,
-				68880EA0262DCD6E00824AF2 /* Contacts */,
-				68880EA1262DCD8200824AF2 /* Recent */,
 				68106B2F2629ADC70019E4E0 /* Assets.xcassets */,
 				68106B312629ADC70019E4E0 /* LaunchScreen.storyboard */,
 				68106B342629ADC80019E4E0 /* Info.plist */,
@@ -120,24 +124,43 @@
 			path = Recents;
 			sourceTree = "<group>";
 		};
-		68880EA0262DCD6E00824AF2 /* Contacts */ = {
+		68FC5EB52678DDE9003FB49D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				68880E97262DC8E000824AF2 /* ContactsViewController.swift */,
-				68880E9A262DC8FC00824AF2 /* ContactsStore.swift */,
-				68A0F298266A2800003561F7 /* ContactInfo.swift */,
+				68106B482629B5CC0019E4E0 /* RecentViewController.swift */,
+				68F21EB326679997007F306E /* TagsViewController.swift */,
+				6896162326651536007E291D /* ContactInfoViewController.swift */,
+				68F037A2267A20D7003BA915 /* AlertViewController.swift */,
+				6896162526664A69007E291D /* EditingViewController.swift */,
+				68BBEFD5263315D100EE1501 /* CallViewController.swift */,
+				68BBEFD2263303DA00EE1501 /* DialViewController.swift */,
+				68887AD72649547A0060BD8D /* KeypadContainerViewControl.swift */,
+				68FC5EB12678D04A003FB49D /* FavouritesViewController.swift */,
 			);
-			path = Contacts;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		68880EA1262DCD8200824AF2 /* Recent */ = {
+		68FC5EB62678DE1A003FB49D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				68106B482629B5CC0019E4E0 /* RecentViewController.swift */,
+				68FC5EB32678D059003FB49D /* FavouritesStore.swift */,
+				68880E9A262DC8FC00824AF2 /* ContactsStore.swift */,
 				68106B422629B2830019E4E0 /* RecentStore.swift */,
-				68106B3C2629B14D0019E4E0 /* RecentCell.swift */,
 			);
-			path = Recent;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		68FC5EBB2678DE83003FB49D /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				68A0F298266A2800003561F7 /* ContactInfo.swift */,
+				68106B3C2629B14D0019E4E0 /* RecentCell.swift */,
+				68A0F29A266A467C003561F7 /* CellType.swift */,
+				68A2EEFE2641C28100C27DA9 /* ReusableNumpad.xib */,
+				68A2EF012641C29A00C27DA9 /* ReusableNumpad.swift */,
+			);
+			path = Structures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +238,7 @@
 				68880E98262DC8E000824AF2 /* ContactsViewController.swift in Sources */,
 				68F21EB426679997007F306E /* TagsViewController.swift in Sources */,
 				68880E9B262DC8FC00824AF2 /* ContactsStore.swift in Sources */,
+				68FC5EB42678D059003FB49D /* FavouritesStore.swift in Sources */,
 				68A0F299266A2800003561F7 /* ContactInfo.swift in Sources */,
 				6896162626664A69007E291D /* EditingViewController.swift in Sources */,
 				68FC5EB02677613E003FB49D /* RecentCall+CoreDataProperties.swift in Sources */,
@@ -225,7 +249,11 @@
 				68106B272629ADC60019E4E0 /* AppDelegate.swift in Sources */,
 				68A0F29B266A467C003561F7 /* CellType.swift in Sources */,
 				68FC5EAF2677613E003FB49D /* RecentCall+CoreDataClass.swift in Sources */,
+				68FC5EB22678D04A003FB49D /* FavouritesViewController.swift in Sources */,
+				68F037A3267A20D7003BA915 /* AlertViewController.swift in Sources */,
 				68BBEFD3263303DA00EE1501 /* DialViewController.swift in Sources */,
+				68FC5EBA2678DE5F003FB49D /* Favourite+CoreDataProperties.swift in Sources */,
+				68FC5EB92678DE5F003FB49D /* Favourite+CoreDataClass.swift in Sources */,
 				68106B492629B5CC0019E4E0 /* RecentViewController.swift in Sources */,
 				68BBEFD6263315D100EE1501 /* CallViewController.swift in Sources */,
 				68106B292629ADC60019E4E0 /* SceneDelegate.swift in Sources */,
