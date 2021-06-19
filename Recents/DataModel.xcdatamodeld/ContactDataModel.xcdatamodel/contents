@@ -6,6 +6,7 @@
         <attribute name="lastName" optional="YES" attributeType="String"/>
         <attribute name="otherData" optional="YES" attributeType="String"/>
         <relationship name="favourites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Favourite" inverseName="contact" inverseEntity="Favourite"/>
+        <relationship name="recents" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecentCall" inverseName="contacts" inverseEntity="RecentCall"/>
     </entity>
     <entity name="Favourite" representedClassName="Favourite" syncable="YES">
         <attribute name="label" optional="YES" attributeType="String"/>
@@ -18,10 +19,11 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isMissed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isOutgoing" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="contacts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="recents" inverseEntity="Contact"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="RecentCall" positionX="-63" positionY="9" width="128" height="104"/>
+        <element name="Contact" positionX="-63" positionY="-18" width="128" height="119"/>
         <element name="Favourite" positionX="-54" positionY="45" width="128" height="74"/>
+        <element name="RecentCall" positionX="-63" positionY="9" width="128" height="119"/>
     </elements>
 </model>

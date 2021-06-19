@@ -2,7 +2,7 @@
 //  RecentCall+CoreDataProperties.swift
 //  Recents
 //
-//  Created by Dimitar Dinev on 14.06.21.
+//  Created by Dimitar Dinev on 18.06.21.
 //
 //
 
@@ -21,6 +21,7 @@ extension RecentCall {
     @NSManaged public var date: Date?
     @NSManaged public var isMissed: Bool
     @NSManaged public var isOutgoing: Bool
+    @NSManaged public var contacts: Contact?
 
 }
 

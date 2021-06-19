@@ -24,8 +24,9 @@ class Section {
 
 class AlertViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableViewTopConstraint: NSLayoutConstraint!
     
-    var contactInfo: ContactInfo!
+    var contact: Contact!
     var phoneNumbers: [ContactInfoItem]!
     var emails: [ContactInfoItem]!
     
@@ -47,12 +48,12 @@ class AlertViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.dataSource = self
         
         sections = [
-            Section(type: "Message", typeData: contactInfo.phoneNumbers.compactMap({ return "\($0.type)"}), valueData:  contactInfo.phoneNumbers.compactMap({ return "\($0.value)"})),
-            Section(type: "Call", typeData: contactInfo.phoneNumbers.compactMap({ return "\($0.type)"}), valueData: contactInfo.phoneNumbers.compactMap({ return "\($0.value)"})),
-            Section(type: "Video", typeData: contactInfo.phoneNumbers.compactMap({ return "\($0.type)"}), valueData:contactInfo.phoneNumbers.compactMap({ return "\($0.value)"})),
-            Section(type: "Mail", typeData: contactInfo.emails.compactMap({ return "\($0.type)"}), valueData:contactInfo.emails.compactMap({ return "\($0.value)"})),
+            Section(type: "Message", typeData: phoneNumbers.compactMap({ return "\($0.type)"}), valueData: phoneNumbers.compactMap({ return "\($0.value)"})),
+            Section(type: "Call", typeData: phoneNumbers.compactMap({ return "\($0.type)"}), valueData: phoneNumbers.compactMap({ return "\($0.value)"})),
+            Section(type: "Video", typeData: phoneNumbers.compactMap({ return "\($0.type)"}), valueData: phoneNumbers.compactMap({ return "\($0.value)"})),
+            Section(type: "Mail", typeData: emails.compactMap({ return "\($0.type)"}), valueData: emails.compactMap({ return "\($0.value)"})),
         ]
-//        print(sections[0].typeData)
+        print(sections[0].typeData)
     }
     
     @IBAction func closeAlert(_ sender: Any?) {
@@ -69,10 +70,16 @@ class AlertViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if sections[indexPath.section].isOpened == false {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "AddToFavouritesCell", for: indexPath) as! AddToFavouritesCell
+//            cell.addType.text = sections[indexPath.row].type
+//            cell.imgView.image = UIImage(systemName: cellImage[indexPath.row])
+//            return cell
+//        }
         
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddToFavouritesCell", for: indexPath) as! AddToFavouritesCell
@@ -93,19 +100,25 @@ class AlertViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         if indexPath.row == 0 {
             sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
+            tableViewTopConstraint.constant = view.frame.height - (CGFloat(phoneNumbers.count) * 60) - 180
             tableView.reloadSections([indexPath.section], with: .none)
         } else {
-            for phone in contactInfo!.phoneNumbers {
-                let favouritesStore = FavouritesStore.shared
-                let favorite = Favourite(context: favouritesStore.persistentContainer.viewContext)
-                favorite.contact = contactInfoController.contact
-                favorite.label = phone.type
-                favorite.phoneNumber = phone.value
-                favouritesStore.add(favorite)
-            }
-            self.dismiss(animated: true)
+            let favouritesStore = FavouritesStore.shared
+            let favourite = Favourite(context: favouritesStore.persistentContainer.viewContext)
+            favourite.contact = contactInfoController.contact
+            favourite.label = phoneNumbers[indexPath.row - 1].type
+            favourite.phoneNumber = phoneNumbers[indexPath.row - 1].value
+            favouritesStore.add(favourite)
+            favouritesStore.saveChanges()
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        if sections[indexPath.section].isOpened == false {
+            tableViewTopConstraint.constant = view.frame.height - (CGFloat(sections.count) * 60) - 120
+            tableView.reloadSections([indexPath.section], with: .none)
         }
     }
 }

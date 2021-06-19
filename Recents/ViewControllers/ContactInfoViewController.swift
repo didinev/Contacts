@@ -168,7 +168,9 @@ class ContactInfoViewController: UITableViewController {
             myAlert.modalPresentationStyle = .popover
             myAlert.modalTransitionStyle = .crossDissolve
             let vc = myAlert as! AlertViewController
-            vc.contactInfo = self.contactInfo
+            vc.contact = self.contact
+            vc.phoneNumbers = self.contactInfo?.phoneNumbers
+            vc.emails = self.contactInfo?.emails
             self.present(myAlert, animated: true)
         }
     }

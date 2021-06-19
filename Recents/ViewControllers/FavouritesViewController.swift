@@ -31,25 +31,11 @@ class FavouritesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favouriteCell", for: indexPath) as! FavouriteCell
         let currentCell = favouritesStore.allFavourites[indexPath.row]
-        cell.nameLabel.text = currentCell.contact?.firstName ?? "n"
-        cell.initialsLabel.text = String(currentCell.contact?.firstName!.first! ?? "n")
+        cell.nameLabel.text = currentCell.contact?.firstName
+        cell.initialsLabel.text = String(currentCell.contact?.firstName!.first! ?? " ")
         cell.phoneTypeLabel.text = currentCell.label
         return cell
     }
-    
-//    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-//        contact = favouritesStore.allFavourites[indexPath.row].contact
-//        performSegue(withIdentifier: "showContactFromFavourites", sender: self)
-//    }
-//    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showContactFromFavourites" {
-//            let contactController = segue.destination as! ContactsViewController
-//            let indexPath = tableView.indexPathForSelectedRow
-//            contactController.contactStore.getContact(indexPath!) = contact
-////            contactController.contact = contact
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         favouritesStore.move(fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
@@ -62,6 +48,40 @@ class FavouritesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        contact = favouritesStore.allFavourites[indexPath.row].contact
+        performSegue(withIdentifier: "showContactFromFavourites", sender: (Any).self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showContactFromFavourites":
+            let contactViewController = segue.destination as! ContactInfoViewController
+            contactViewController.contact = contact
+            contactViewController.contactInfo = ContactInfo()
+        case "callContactFromFavourites":
+            let callingController = segue.destination as! CallViewController
+            let indexPath = tableView.indexPathForSelectedRow!
+            let contact = favouritesStore.allFavourites[indexPath.row].contact!
+            let firstName = contact.firstName!
+            let lastName = contact.lastName ?? ""
+            callingController.phoneNumber = firstName + lastName
+            let name = firstName + lastName
+            let type = favouritesStore.allFavourites[indexPath.row].label
+            RecentStore.shared.addCall(name, type!)
+        case "showAllContactsFromFavourites":
+            let navController = segue.destination as! UINavigationController
+            let contactsController = navController.topViewController as! ContactsViewController
+            contactsController.isFromFavourite = true
+        default:
+            preconditionFailure("Unexpected segue identifier.")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "callContactFromFavourites", sender: (Any).self)
     }
     
     func setEmptyMessage(_ message: String) {
@@ -78,3 +98,27 @@ class FavouritesViewController: UITableViewController {
         tableView.separatorStyle = .singleLine
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+//    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+//        contact = favouritesStore.allFavourites[indexPath.row].contact
+//        performSegue(withIdentifier: "showContactFromFavourites", sender: self)
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showContactFromFavourites" {
+//            let contactController = segue.destination as! ContactsViewController
+//            let indexPath = tableView.indexPathForSelectedRow
+//            contactController.contactStore.getContact(indexPath!) = contact
+////            contactController.contact = contact
+//        }
+//    }

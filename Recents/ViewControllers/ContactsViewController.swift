@@ -13,6 +13,8 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
         return searchController.isActive && !isSearchBarEmpty
     }
     
+    var isFromFavourite = false
+    
     @IBOutlet var myCardView: UIView!
     
     override func viewDidLoad() {
@@ -88,6 +90,31 @@ class ContactsViewController : UITableViewController, UISearchResultsUpdating {
             viewController.contactInfo = ContactInfo()
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !isFromFavourite {
+            performSegue(withIdentifier: "contactInfo", sender: (Any).self)
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let myAlert = storyboard.instantiateViewController(withIdentifier: "AlertViewController")
+        myAlert.modalPresentationStyle = .popover
+        myAlert.modalTransitionStyle = .crossDissolve
+        let alertController = myAlert as! AlertViewController
+        let contact = contactStore.getContact(indexPath)
+        var contactInfo = ContactInfo()
+        do {
+            let jsonData = contact.otherData?.data(using: .utf8)
+            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
+        } catch {
+            print(error)
+        }
+        alertController.contact = contact
+        alertController.phoneNumbers = contactInfo.phoneNumbers
+        alertController.emails = contactInfo.emails
+        self.present(myAlert, animated: true)
     }
 }
 

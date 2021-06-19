@@ -806,7 +806,7 @@
             <objects>
                 <tableViewController title="ContactsViewController" id="jZb-7t-5jW" customClass="ContactsViewController" customModule="Recents" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gun-B8-FsK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="rUy-pZ-DaK">
@@ -937,7 +937,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="8Qr-4i-yC6">
-                                <rect key="frame" x="50" y="732" width="314" height="80"/>
+                                <rect key="frame" x="50" y="683" width="314" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f66-o3-wwY">
                                         <rect key="frame" x="0.0" y="0.0" width="88" height="80"/>
@@ -972,7 +972,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UDy-NI-j4C">
-                                <rect key="frame" x="50" y="64" width="314" height="130"/>
+                                <rect key="frame" x="50" y="160" width="314" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjF-88-UtZ">
                                         <rect key="frame" x="20" y="5" width="274" height="70"/>
@@ -1099,7 +1099,7 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="x1M-JA-yoF">
-                                <rect key="frame" x="20" y="64" width="374" height="95.5"/>
+                                <rect key="frame" x="20" y="160" width="374" height="95.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="95.670000000000002" id="VlG-dV-Ren"/>
                                     <constraint firstAttribute="height" constant="95.670000000000002" id="tp0-BE-B4e"/>
@@ -1109,7 +1109,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k7P-kI-ERz" customClass="KeypadContainerViewContol" customModule="Recents" customModuleProvider="target">
-                                <rect key="frame" x="30" y="334.5" width="354" height="377.5"/>
+                                <rect key="frame" x="30" y="285.5" width="354" height="377.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="k7P-kI-ERz" secondAttribute="height" multiplier="15:16" id="fkh-1y-YZK"/>
@@ -1312,6 +1312,7 @@
                                     <outlet property="initialsLabel" destination="Pio-bl-j1c" id="YCM-6M-JTi"/>
                                     <outlet property="nameLabel" destination="Tnr-6K-uuG" id="Cxe-SD-qgc"/>
                                     <outlet property="phoneTypeLabel" destination="Jpi-w6-Onc" id="SVK-ig-CGr"/>
+                                    <segue destination="Bgx-uj-JPL" kind="show" identifier="callContactFromFavourites" id="X5I-Ba-BhP"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1321,7 +1322,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favourites" largeTitleDisplayMode="always" id="18B-Bt-SPO">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="mIA-sf-fMT"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="mIA-sf-fMT">
+                            <connections>
+                                <segue destination="jZb-7t-5jW" kind="presentation" identifier="showAllContactsFromFavourites" id="UPp-x4-yfk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="XSb-Ui-ka8"/>
                     </navigationItem>
                     <connections>
@@ -1514,6 +1519,7 @@
                     <navigationItem key="navigationItem" id="s9I-rG-fFd"/>
                     <connections>
                         <outlet property="tableView" destination="jel-Dh-Vf1" id="dOr-CV-YFE"/>
+                        <outlet property="tableViewTopConstraint" destination="UfF-6u-UO4" id="QdU-Gr-lqE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="66m-dx-dH1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1527,7 +1533,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ds4-mi-xJd"/>
+        <segue reference="X5I-Ba-BhP"/>
+        <segue reference="UPp-x4-yfk"/>
         <segue reference="Cpz-OH-XTi"/>
         <segue reference="EJi-cT-uKk"/>
     </inferredMetricsTieBreakers>

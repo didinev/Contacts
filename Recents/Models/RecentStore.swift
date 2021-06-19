@@ -77,10 +77,11 @@ public class RecentStore {
         return missedCalls[indexPath.row]
     }
     
-    func addCall(_ number: String, _ type: String, _ date: Date, _ isMissed: Bool = false, isOutgoing: Bool = true) {
+    func addCall(_ number: String, _ type: String, _ date: Date = Date(), _ isMissed: Bool = false, isOutgoing: Bool = true) {
         let call = RecentCall(context: persistentContainer.viewContext)
         call.contactName = number
         call.callType = type
+//        call.contacts = contact
         call.date = date
         call.isMissed = isMissed
         call.isOutgoing = isOutgoing
