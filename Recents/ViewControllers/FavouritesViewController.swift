@@ -9,7 +9,7 @@ import UIKit
 
 class FavouritesViewController: UITableViewController {
     var favouritesStore = FavouritesStore.shared
-    var contact: Contact!
+    var contact: Contact?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class FavouritesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favouriteCell", for: indexPath) as! FavouriteCell
         let currentCell = favouritesStore.allFavourites[indexPath.row]
         cell.nameLabel.text = currentCell.contact?.firstName
-        cell.initialsLabel.text = String(currentCell.contact?.firstName!.first! ?? " ")
+        cell.initialsLabel.text = String(currentCell.contact?.firstName!.first! ?? "n")
         cell.phoneTypeLabel.text = currentCell.label
         return cell
     }
@@ -70,11 +70,12 @@ class FavouritesViewController: UITableViewController {
             callingController.phoneNumber = firstName + lastName
             let name = firstName + lastName
             let type = favouritesStore.allFavourites[indexPath.row].label
+            
             RecentStore.shared.addCall(name, type!)
         case "showAllContactsFromFavourites":
-            let navController = segue.destination as! UINavigationController
-            let contactsController = navController.topViewController as! ContactsViewController
-            contactsController.isFromFavourite = true
+            let navController = segue.destination as? UINavigationController
+            let contactsController = navController?.topViewController as? ContactsViewController
+            contactsController?.isFromFavourite = true
         default:
             preconditionFailure("Unexpected segue identifier.")
         }

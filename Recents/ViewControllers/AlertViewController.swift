@@ -108,7 +108,7 @@ class AlertViewController: UIViewController, UITableViewDataSource, UITableViewD
         } else {
             let favouritesStore = FavouritesStore.shared
             let favourite = Favourite(context: favouritesStore.persistentContainer.viewContext)
-            favourite.contact = contactInfoController.contact
+            favourite.contact = contact
             favourite.label = phoneNumbers[indexPath.row - 1].type
             favourite.phoneNumber = phoneNumbers[indexPath.row - 1].value
             favouritesStore.add(favourite)

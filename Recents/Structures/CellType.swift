@@ -10,6 +10,9 @@ import UIKit
 class InfoTextLabel: UITableViewCell {
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var contentLabel: UILabel!
+    @IBOutlet var isRecentLabel: UILabel!
+    @IBOutlet var isFavouriteImg: UIImageView!
+    @IBOutlet var favouriteToRecentConstraint: NSLayoutConstraint!
 }
 
 class TextFieldCell: UITableViewCell {
@@ -19,7 +22,31 @@ class TextFieldCell: UITableViewCell {
 class LabelCell: UITableViewCell {
     @IBOutlet var txtLabel: UILabel!
     @IBOutlet var textField: CustomTextField!
+
 }
+
+//class TypeValueCell: UITableViewCell, ContactCell {
+//    @IBOutlet var name: UILabel!
+//    @IBOutlet var number: UILabel!
+//    @IBOutlet var isRecentLabel: UILabel!
+//    @IBOutlet var isFavouriteImage: UIImageView!
+//    @IBOutlet var favouriteToRecentConstraint: NSLayoutConstraint!
+//    
+//    var isMissed = false
+//    var isFavourite = false
+//    var isRecent = false
+//    
+//    func setup(_ item: (String, String)) {
+//        name.text = item.0
+//        number.text = item.1
+//        //name.textColor = isMissed ? .red : .black
+//        number.textColor = isMissed ? .red : .link
+//        
+//        isFavouriteImage.isHidden = !isFavourite
+//        isRecentLabel.isHidden = !isRecent
+//        favouriteToRecentConstraint.constant = isFavourite ? 5 : -isFavouriteImage.bounds.width
+//    }
+//}
 
 class ButtonCell: UITableViewCell {
     @IBOutlet var txtLabel: UILabel!

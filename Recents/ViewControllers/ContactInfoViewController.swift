@@ -43,26 +43,41 @@ class ContactInfoViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        contactFirstLetter.text = "\(contact.firstName!.first!)"
-        contactNameLabel.text = contact.firstName
+//        contactFirstLetter.text = "\(contact.firstName!.first!)"
+//        contactNameLabel.text = contact.firstName
+        do {
+            let jsonData = contact?.otherData?.data(using: .utf8)
+            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData ?? Data())
+            updateData()
+        } catch {
+            print(error)
+        }
         updateData()
         tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            let jsonData = contact?.otherData?.data(using: .utf8)
+            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData ?? Data())
+            updateData()
+        } catch {
+            print(error)
+        }
 
-        updateData()
-        contactFirstLetter.text = "\(contact.firstName!.first!)"
-        contactNameLabel.text = contact.firstName
+//        updateData()
+        contactFirstLetter.text = "\(contact?.firstName?.first! ?? "n")"
+        contactNameLabel.text = contact?.firstName ?? "n"
     }
     
     func updateData() {
-        contactNameLabel.text = contact!.firstName
+//        contactNameLabel.text = contact?.firstName ?? ""
         sectionRows = sectionRowsCopy
         do {
-            let jsonData = contact.otherData?.data(using: .utf8)
-            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
+//            let jsonData = contact.otherData?.data(using: .utf8)
+//            contactInfo = try JSONDecoder().decode(ContactInfo.self, from: jsonData!)
             if !contactInfo!.dates.isEmpty {
                 sectionRows.insert([], at: 0)
                 contactInfo!.dates.forEach { sectionRows[0].append((($0.type, $0.value), .phoneNumber)) }

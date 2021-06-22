@@ -9,13 +9,18 @@ import CoreData
 
 class FavouritesStore {
     static var shared = FavouritesStore()
+    
     let persistentContainer = ContactStore.shared.persistentContainer
     var allFavourites: [Favourite]
     
     init() {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Favourite> = Favourite.fetchRequest()
         do {
-            allFavourites = try persistentContainer.viewContext.fetch(Favourite.fetchRequest())
+            allFavourites = try context.fetch(fetchRequest)
+//            print(allFavourites.first!.contact)
         } catch {
+            print("catch")
             print(error)
             allFavourites = []
         }

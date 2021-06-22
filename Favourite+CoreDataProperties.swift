@@ -2,7 +2,7 @@
 //  Favourite+CoreDataProperties.swift
 //  Recents
 //
-//  Created by Dimitar Dinev on 15.06.21.
+//  Created by Dimitar Dinev on 21.06.21.
 //
 //
 

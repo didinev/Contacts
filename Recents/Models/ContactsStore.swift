@@ -45,10 +45,12 @@ class ContactStore {
 
         do {
             contacts = try context.fetch(Contact.fetchRequest())
-            allContacts = Dictionary(grouping: contacts, by: { $0.firstName!.first!})
+//            print(contacts.first)
+            allContacts = Dictionary(grouping: contacts, by: { $0.firstName!.first! })
             sections = Set(contacts.map { $0.firstName!.first! }).sorted()
         } catch {
             allContacts = Dictionary()
+            print("catch")
             sections = []
             contacts = []
             print(error)
